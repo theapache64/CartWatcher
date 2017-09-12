@@ -35,7 +35,6 @@ public abstract class BaseSplashActivity extends BaseAppCompatActivity {
             @Override
             public void run() {
                 onSplashFinished();
-                finish();
             }
         }, getSplashDuration());
 

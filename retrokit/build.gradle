@@ -64,6 +64,7 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
+    compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
 
 
     testCompile 'junit:junit:4.12'

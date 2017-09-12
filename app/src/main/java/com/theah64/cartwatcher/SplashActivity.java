@@ -1,5 +1,6 @@
 package com.theah64.cartwatcher;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.retrokit.activities.BaseSplashActivity;
 
 /**
@@ -20,11 +21,14 @@ public class SplashActivity extends BaseSplashActivity {
 
     @Override
     public void onSplashFinished() {
-
+        new MaterialDialog.Builder(this)
+                .positiveText("OK")
+                .build()
+                .show();
     }
 
     @Override
     public int getLogo() {
-        return 0;
+        return R.drawable.ic_add_white_24dp;
     }
 }
