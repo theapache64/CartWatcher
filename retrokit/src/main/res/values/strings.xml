@@ -3,4 +3,10 @@
     <string name="RETRY">RETRY</string>
     <string name="network_error">Network error occurred, please check your connection</string>
     <string name="server_error">Server error occurred, please try again later</string>
+    <string name="Expired">Expired</string>
+    <string name="Old_version">Old version</string>
+    <string name="Looks_like_theres_new_version_available">Looks like there\'s a new version available</string>
+    <string name="UPDATE">UPDATE</string>
+    <string name="CLOSE">CLOSE</string>
+    <string name="EXIT">EXIT</string>
 </resources>

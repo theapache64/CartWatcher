@@ -1,8 +1,11 @@
 package com.theah64.retrokit.retro;
 
+import android.content.Context;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.theah64.retrokit.R;
+import com.theah64.retrokit.utils.PreferenceUtils;
 import com.wang.avi.Indicator;
 import com.wang.avi.indicators.BallPulseSyncIndicator;
 
@@ -14,7 +17,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class RetroKit {
 
-    private static final RetroKit instance = new RetroKit();
+    private static RetroKit instance;
 
     private static final String FONT_ROBOTO_REGULAR = "fonts/Roboto-Regular.ttf";
     private static final String FONT_ROBOTO_BOLD = "fonts/Roboto-Bold.ttf";
@@ -24,15 +27,25 @@ public class RetroKit {
     private Indicator defaultProgressIndicator;
     private int defaultProgressIndicatorColor;
     private boolean isDebug;
+    private boolean versionCheck;
+
+    public static RetroKit init(final Context context) {
+        if (instance == null) {
+            instance = new RetroKit(context);
+        }
+        return instance;
+    }
 
     public static RetroKit getInstance() {
         return instance;
     }
 
-    private RetroKit() {
+    private RetroKit(final Context context) {
         this.defaultProgressIndicator = new BallPulseSyncIndicator();
         this.defaultProgressIndicatorColor = android.support.design.R.attr.colorPrimary;
         this.isDebug = false;
+
+        PreferenceUtils.init(context);
     }
 
     public boolean isDebug() {
@@ -83,6 +96,16 @@ public class RetroKit {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        return this;
+    }
+
+
+    public boolean isVersionCheck() {
+        return versionCheck;
+    }
+
+    public RetroKit enableVersionCheck() {
+        this.versionCheck = true;
         return this;
     }
 }

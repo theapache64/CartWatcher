@@ -3,7 +3,10 @@ package com.theah64.retrokit.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.theah64.retrokit.R;
 
@@ -21,14 +24,30 @@ public abstract class BaseSplashActivity extends BaseAppCompatActivity {
     public abstract void onSplashFinished();
 
     @DrawableRes
-    public abstract int getLogo();
+    public int getLogo() {
+        return -1;
+    }
+
+    @StringRes
+    public int getTextLogo() {
+        return -1;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ((ImageView) findViewById(R.id.ivSplashLogo)).setImageResource(getLogo());
+        if (getLogo() != -1) {
+            ((ImageView) findViewById(R.id.ivSplashLogo)).setImageResource(getLogo());
+        }
+
+        if (getTextLogo() != -1) {
+            final TextView tvTextLogo = (TextView) findViewById(R.id.tvTextLogo);
+            tvTextLogo.setText(getTextLogo());
+            tvTextLogo.setTextSize(getTextLogoSize());
+            tvTextLogo.setTextColor(ContextCompat.getColor(this, getTextLogoColor()));
+        }
 
         onSplashStart();
         new Handler().postDelayed(new Runnable() {
@@ -37,6 +56,13 @@ public abstract class BaseSplashActivity extends BaseAppCompatActivity {
                 onSplashFinished();
             }
         }, getSplashDuration());
+    }
 
+    public float getTextLogoSize() {
+        return 18;
+    }
+
+    public int getTextLogoColor() {
+        return android.R.color.white;
     }
 }
