@@ -47,7 +47,7 @@ public abstract class BaseVersionCheckerSplashActivity extends BaseSplashActivit
                 }
 
                 @Override
-                public void onFailure(Call<BaseAPIResponse<VersionCheckerResponse>> call, Throwable t) {
+                public void onFailure(@NonNull Call<BaseAPIResponse<VersionCheckerResponse>> call, @NonNull Throwable t) {
 
                 }
             });
