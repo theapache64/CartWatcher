@@ -18,7 +18,7 @@ public class SplashActivity extends BaseVersionCheckerSplashActivity {
 
     @Override
     public long getSplashDuration() {
-        return 2000;
+        return 800;
     }
 
 

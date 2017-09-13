@@ -1,1 +1,1 @@
-include ':app', ':retrokit'
+include ':app', ':retrokit', ':jlab'

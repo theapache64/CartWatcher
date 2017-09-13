@@ -30,5 +30,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(path: ':retrokit')
     compile project(path: ':retrokit')
+    compile 'com.theah64.bugmailer:bugmailer:1.0.4'
 
 }

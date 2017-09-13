@@ -3,6 +3,9 @@ package com.theah64.cartwatcher.utils;
 import android.app.Application;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.theah64.bugmailer.core.BugMailer;
+import com.theah64.bugmailer.core.BugMailerConfig;
+import com.theah64.bugmailer.exceptions.BugMailerException;
 import com.theah64.retrokit.retro.RetroKit;
 
 /**
@@ -20,5 +23,11 @@ public class CartWatcher extends Application {
                 .enableVersionCheck()
                 .setIconModule(new FontAwesomeModule())
                 .setDefaultFontPathAsRobotoRegular();
+
+        try {
+            BugMailer.init(this, new BugMailerConfig("theapache64@gmail.com"));
+        } catch (BugMailerException e) {
+            e.printStackTrace();
+        }
     }
 }
