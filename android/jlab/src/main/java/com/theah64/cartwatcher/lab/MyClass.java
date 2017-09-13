@@ -16,9 +16,11 @@ import okhttp3.Response;
 
 
 public class MyClass {
+
     public static void main(String[] args) throws IOException {
 
         final String productUrl = "https://www.amazon.in/Moto-Plus-Lunar-Grey-64GB/dp/B071HWTHPH?tag=googinhydr18418-21&tag=googinkenshoo-21&ascsubtag=70c55133-d4bd-4a45-ba5f-c36f0f11bae1";
+
         new OkHttpClient().newCall(new Request.Builder().url(productUrl).build()).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -41,4 +43,5 @@ public class MyClass {
         });
 
     }
+
 }

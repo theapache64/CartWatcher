@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CartWatcher.iml" filepath="$PROJECT_DIR$/.idea/CartWatcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cartwatcher_server.iml" filepath="$PROJECT_DIR$/cartwatcher_server.iml" />
     </modules>
   </component>
 </project>
