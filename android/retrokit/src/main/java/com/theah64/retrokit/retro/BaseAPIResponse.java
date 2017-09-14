@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by theapache64 on 25/8/17.
  */
 
-public final class BaseAPIResponse<D> {
+public class BaseAPIResponse<D> {
 
     @SerializedName("error")
     private final boolean error;

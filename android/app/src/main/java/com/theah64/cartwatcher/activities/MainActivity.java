@@ -10,23 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.theah64.bugmailer.core.BugMailer;
-import com.theah64.bugmailer.core.BugMailerNode;
-import com.theah64.bugmailer.core.NodeBuilder;
-import com.theah64.bugmailer.models.Node;
 import com.theah64.cartwatcher.R;
+import com.theah64.cartwatcher.models.Product;
+import com.theah64.cartwatcher.utils.APIInterface;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
+import com.theah64.retrokit.retro.BaseAPIResponse;
+import com.theah64.retrokit.retro.RetrofitClient;
 
-import java.io.IOException;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -53,6 +50,28 @@ public class MainActivity extends BaseAppCompatActivity {
                             @Override
                             public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
 
+                                final String productUrl = input.toString();
+
+                                if (URLUtil.isValidUrl(productUrl)) {
+                                    //Valid url
+
+                                    RetrofitClient.getClient().create(APIInterface.class).getProduct(productUrl).enqueue(new Callback<BaseAPIResponse<Product>>() {
+                                        @Override
+                                        public void onResponse(Call<BaseAPIResponse<Product>> call, Response<BaseAPIResponse<Product>> response) {
+
+                                            Toast.makeText(MainActivity.this, response.body().getData().toString(), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<BaseAPIResponse<Product>> call, Throwable t) {
+
+                                        }
+                                    });
+
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.Invalid_URL, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .build().show();
@@ -60,27 +79,8 @@ public class MainActivity extends BaseAppCompatActivity {
             }
         });
 
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.newCall(new Request.Builder().url("http://dl.flipkart.com/dl/haier-310-l-frost-free-double-door-refrigerator/p/itmevzx2jdjgjyyd?pid=RFREVZX2ZHARQPSH&cmpid=product.share.pp").build())
-                .enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Call call, final Response response) throws IOException {
-
-                        final String responseString = response.body().string();
-                        Log.d("OK", responseString);
-
-                    }
-                });
-
-
     }
 
-    public static final String FLIPKART_URL_REGEX = ".*(?:http|https):\\/\\/flipkart\\.com\\/(?:.+)\\/(?:.+).*";
     private static final String X = MainActivity.class.getSimpleName();
 
     public String getValidRecentProductURLFromClipboard() {
@@ -94,7 +94,9 @@ public class MainActivity extends BaseAppCompatActivity {
         }
 
         if (clipboardData != null) {
-            System.out.println("Clipboard: " + clipboardData);
+            if (clipboardData.contains("amazon.com") || clipboardData.contains("flipkart.com")) {
+                return clipboardData;
+            }
         }
 
         return null;

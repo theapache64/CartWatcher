@@ -19,7 +19,7 @@ public class CartWatcher extends Application {
         super.onCreate();
 
         RetroKit.init(this)
-                .setRetrofitBaseURL("http://theapache64.xyz:8080/mock_api/get_json/cartwatcher/")
+                .setRetrofitBaseURL("http://theapache64.xyz:8080/cartwatcher/v1/")
                 .enableVersionCheck()
                 .setIconModule(new FontAwesomeModule())
                 .setDefaultFontPathAsRobotoRegular();
