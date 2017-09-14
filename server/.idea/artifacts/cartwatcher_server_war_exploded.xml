@@ -8,7 +8,7 @@
           <element id="module-output" name="cartwatcher_server" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="application" name="json" />
+          <element id="library" level="project" name="com.squareup.retrofit2:retrofit:2.3.0" />
         </element>
       </element>
     </root>

@@ -2,7 +2,7 @@ package com.theah64.cartwatcher.server.webengine.servlets;
 
 import com.theah64.cartwatcher.server.webengine.RequestException;
 import com.theah64.cartwatcher.server.webengine.Response;
-import com.theah64.movie_db.utils.Request;
+import com.theah64.cartwatcher.server.webengine.Request;
 import org.json.JSONException;
 
 import javax.servlet.ServletException;
@@ -42,7 +42,7 @@ public abstract class AdvancedBaseServlet extends HttpServlet {
         out.write(new Response(methodErrorMessage).getResponse());
     }
 
-    PrintWriter getWriter() {
+    protected PrintWriter getWriter() {
         return out;
     }
 
