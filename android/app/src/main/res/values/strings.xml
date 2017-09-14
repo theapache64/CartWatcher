@@ -2,6 +2,7 @@
     <string name="app_name">CartWatcher</string>
     <string name="action_settings">Settings</string>
     <string name="Add_product">Add product</string>
-    <string name="Product_URL">Product URL</string>
     <string name="Invalid_URL">Invalid URL</string>
+    <string name="Product_exists">Product exists</string>
+    <string name="Paste_product_URL_here">Paste product URL here</string>
 </resources>

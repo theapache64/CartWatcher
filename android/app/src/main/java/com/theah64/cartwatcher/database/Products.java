@@ -3,6 +3,7 @@ package com.theah64.cartwatcher.database;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.cartwatcher.models.Product;
 
 /**
@@ -12,6 +13,11 @@ import com.theah64.cartwatcher.models.Product;
 public class Products extends BaseTable<Product> {
 
     private static final String COLUMN_SPECIAL_ID = "special_id";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_SOURCE = "source";
+    private static final String COLUMN_PRODUCT_URL = "product_url";
+    private static final String COLUMN_HIT_INTERVAL = "hit_interval";
+    private static final String COLUMN_HIT_INTERVAL_TYPE = "hit_interval_type";
     private static Products instance;
 
     Products(Context context) {
@@ -30,12 +36,22 @@ public class Products extends BaseTable<Product> {
         return get(Products.COLUMN_SPECIAL_ID, product.getSpecialId(), Products.COLUMN_ID) != null;
     }
 
+
     @Override
-    public long add(Product product) {
+    public long add(Product product) throws CartWatcherSQLException {
 
         final ContentValues cv = new ContentValues();
-        cv.put(COLUMN_SPECIAL_ID, );
+        cv.put(COLUMN_SPECIAL_ID, product.getSpecialId());
+        cv.put(COLUMN_TITLE, product.getTitle());
+        cv.put(COLUMN_SOURCE, product.getSource());
+        cv.put(COLUMN_PRODUCT_URL, product.getProductUrl());
+        cv.put(COLUMN_HIT_INTERVAL, product.getHitInterval());
+        cv.put(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType());
 
-        return super.add(newInstance);
+        final long rowId = this.getWritableDatabase().insert(getTableName(), null, cv);
+        if (rowId == -1) {
+            throw new CartWatcherSQLException("Failed to add product");
+        }
+        return rowId;
     }
 }

@@ -5,8 +5,8 @@ CREATE TABLE products(
 	title TEXT NOT NULL,
 	source VARCHAR(10) CHECK (source IN ('FLIPKART','AMAZON')),
 	product_url TEXT NOT NULL,
-	hit_interval_count TEXT DEFAULT NULL,
-	hit_interval_type VARCHAR(8) CHECK(hit_interval_type IN ('SECONDS','MINUTE','HOUR','DAY','MONTH','YEAR')),
+	hit_interval TEXT DEFAULT NULL,
+	hit_interval_type VARCHAR(8) CHECK(hit_interval_type IN ('SECOND','MINUTE','HOUR','DAY','WEEK','MONTH','YEAR')),
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

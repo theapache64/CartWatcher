@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.Products;
+import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.cartwatcher.models.Product;
 import com.theah64.cartwatcher.responses.GetProductResponse;
 import com.theah64.cartwatcher.utils.APIInterface;
@@ -46,9 +47,9 @@ public class MainActivity extends BaseAppCompatActivity {
                         .title(R.string.Add_product)
                         .inputType(InputType.TYPE_CLASS_TEXT)
                         .autoDismiss(false)
-                        .input(getString(R.string.Product_URL), lastClipboardData, false, new MaterialDialog.InputCallback() {
+                        .input(getString(R.string.Paste_product_URL_here), lastClipboardData, false, new MaterialDialog.InputCallback() {
                             @Override
-                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                            public void onInput(@NonNull final MaterialDialog dialog, CharSequence input) {
 
                                 final String productUrl = input.toString();
 
@@ -60,11 +61,24 @@ public class MainActivity extends BaseAppCompatActivity {
                                         @Override
                                         protected void onSuccess(GetProductResponse data) {
                                             System.out.println("Product loaded: " + data.getProduct());
+                                            dialog.dismiss();
 
                                             final Product product = data.getProduct();
 
+
                                             if (!products.exist(product)) {
-                                                products.add(product);
+
+                                                //Ask interval and interval type
+                                                
+
+                                                try {
+                                                    products.add(product);
+                                                } catch (CartWatcherSQLException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                //Product exist in db
+                                                Toast.makeText(MainActivity.this, R.string.Product_exists, Toast.LENGTH_SHORT).show();
                                             }
                                         }
 

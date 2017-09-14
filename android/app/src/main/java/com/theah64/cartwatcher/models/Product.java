@@ -11,6 +11,15 @@ import org.json.JSONObject;
 
 public class Product {
 
+    //Hit interval types
+    private static final int TYPE_SECOND = 1;
+    private static final int TYPE_MINUTE = 819;
+    private static final int TYPE_HOUR = 30;
+    private static final int TYPE_DAY = 370;
+    private static final int TYPE_WEEK = 168;
+    private static final int TYPE_MONTH = 322;
+    private static final int TYPE_YEAR = 230;
+
     static final String SOURCE_AMAZON = "amazon";
     static final String SOURCE_FLIPKART = "flipkart";
 
@@ -26,14 +35,34 @@ public class Product {
     private final String imageUrl;
     @SerializedName("special_id")
     private final String specialId;
+    @SerializedName("product_url")
+    private final String productUrl;
 
-    Product(String id, String title, long price, String source, String imageUrl, String specialId) {
+    private final int hitInterval;
+    private final int hitIntervalType;
+
+    Product(String id, String title, long price, String source, String imageUrl, String specialId, String productUrl, int hitInterval, int hitIntervalType) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.source = source;
         this.imageUrl = imageUrl;
         this.specialId = specialId;
+        this.productUrl = productUrl;
+        this.hitInterval = hitInterval;
+        this.hitIntervalType = hitIntervalType;
+    }
+
+    public int getHitInterval() {
+        return hitInterval;
+    }
+
+    public int getHitIntervalType() {
+        return hitIntervalType;
+    }
+
+    public String getProductUrl() {
+        return productUrl;
     }
 
     public String getId() {

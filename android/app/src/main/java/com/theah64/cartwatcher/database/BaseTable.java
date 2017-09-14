@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.retrokit.utils.FileUtils;
 
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     }
 
 
-    public long add(T newInstance) {
+    public long add(T newInstance) throws CartWatcherSQLException {
         throw new IllegalArgumentException(FATAL_ERROR_UNDEFINED_METHOD);
     }
 
@@ -133,7 +134,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
         return context;
     }
 
-    private String getTableName() {
+    String getTableName() {
         return tableName;
     }
 
