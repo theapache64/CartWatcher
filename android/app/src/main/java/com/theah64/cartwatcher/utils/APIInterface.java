@@ -1,6 +1,6 @@
 package com.theah64.cartwatcher.utils;
 
-import com.theah64.cartwatcher.models.Product;
+import com.theah64.cartwatcher.responses.GetProductResponse;
 import com.theah64.retrokit.retro.BaseAPIResponse;
 
 import retrofit2.Call;
@@ -13,5 +13,5 @@ import retrofit2.http.Query;
 
 public interface APIInterface {
     @GET("get_product")
-    Call<BaseAPIResponse<Product>> getProduct(@Query("product_url") String productUrl);
+    Call<BaseAPIResponse<GetProductResponse>> getProduct(@Query("product_url") String productUrl);
 }

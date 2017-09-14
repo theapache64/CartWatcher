@@ -8,22 +8,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.R;
+import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.Product;
+import com.theah64.cartwatcher.responses.GetProductResponse;
 import com.theah64.cartwatcher.utils.APIInterface;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
 import com.theah64.retrokit.retro.BaseAPIResponse;
+import com.theah64.retrokit.retro.CustomRetrofitCallback;
 import com.theah64.retrokit.retro.RetrofitClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -33,6 +31,8 @@ public class MainActivity extends BaseAppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final Products products = Products.getInstance(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,18 +53,24 @@ public class MainActivity extends BaseAppCompatActivity {
                                 final String productUrl = input.toString();
 
                                 if (URLUtil.isValidUrl(productUrl)) {
+
+
                                     //Valid url
-
-                                    RetrofitClient.getClient().create(APIInterface.class).getProduct(productUrl).enqueue(new Callback<BaseAPIResponse<Product>>() {
+                                    RetrofitClient.getClient().create(APIInterface.class).getProduct(productUrl).enqueue(new CustomRetrofitCallback<BaseAPIResponse<GetProductResponse>, GetProductResponse>() {
                                         @Override
-                                        public void onResponse(Call<BaseAPIResponse<Product>> call, Response<BaseAPIResponse<Product>> response) {
+                                        protected void onSuccess(GetProductResponse data) {
+                                            System.out.println("Product loaded: " + data.getProduct());
 
-                                            Toast.makeText(MainActivity.this, response.body().getData().toString(), Toast.LENGTH_SHORT).show();
+                                            final Product product = data.getProduct();
+
+                                            if (!products.exist(product)) {
+                                                products.add(product);
+                                            }
                                         }
 
                                         @Override
-                                        public void onFailure(Call<BaseAPIResponse<Product>> call, Throwable t) {
-
+                                        protected void onFailure(String message) {
+                                            System.out.println("Product failed to load: " + message);
                                         }
                                     });
 

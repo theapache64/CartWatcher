@@ -14,17 +14,38 @@ public class Product {
     static final String SOURCE_AMAZON = "amazon";
     static final String SOURCE_FLIPKART = "flipkart";
 
+    private final String id;
+
     @SerializedName("title")
     private final String title;
     @SerializedName("price")
     private final long price;
     @SerializedName("source")
     private final String source;
+    @SerializedName("image_url")
+    private final String imageUrl;
+    @SerializedName("special_id")
+    private final String specialId;
 
-    Product(String title, long price, String source) {
+    Product(String id, String title, long price, String source, String imageUrl, String specialId) {
+        this.id = id;
         this.title = title;
         this.price = price;
         this.source = source;
+        this.imageUrl = imageUrl;
+        this.specialId = specialId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getSpecialId() {
+        return specialId;
     }
 
     public String getTitle() {
