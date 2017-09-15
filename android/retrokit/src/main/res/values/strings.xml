@@ -9,4 +9,8 @@
     <string name="UPDATE">UPDATE</string>
     <string name="CLOSE">CLOSE</string>
     <string name="EXIT">EXIT</string>
+    <string name="Confirm">Confirm</string>
+    <string name="NO">NO</string>
+    <string name="YES">YES</string>
+    <string name="Empty">Empty</string>
 </resources>

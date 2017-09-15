@@ -1,5 +1,7 @@
 package com.theah64.retrokit.retro;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -25,10 +27,25 @@ public class RetrofitClient {
         }
 
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
+
+
+            Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                    .addConverterFactory(GsonConverterFactory.create());
+
+            if (RetroKit.getInstance().isLogNetwork()) {
+
+                System.out.println("Enabled network logging");
+
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
+
+                retrofitBuilder.client(httpClient.build());
+            }
+
+            retrofit = retrofitBuilder.build();
         }
 
         return retrofit;

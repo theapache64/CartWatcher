@@ -3,10 +3,11 @@ CREATE TABLE products(
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     special_id TEXT NOT NULL,
 	title TEXT NOT NULL,
-	source VARCHAR(10) CHECK (source IN ('FLIPKART','AMAZON')),
+	source VARCHAR(10) CHECK (source IN ('FLIPKART','AMAZON')) NOT NULL,
 	product_url TEXT NOT NULL,
-	hit_interval TEXT DEFAULT NULL,
-	hit_interval_type VARCHAR(8) CHECK(hit_interval_type IN ('SECOND','MINUTE','HOUR','DAY','WEEK','MONTH','YEAR')),
+	hit_interval TEXT NOT NULL,
+	hit_interval_type VARCHAR(8) CHECK(hit_interval_type IN ('SECOND','MINUTE','HOUR','DAY','WEEK','MONTH','YEAR')) NOT NULL,
+	hit_interval_in_millis TEXT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

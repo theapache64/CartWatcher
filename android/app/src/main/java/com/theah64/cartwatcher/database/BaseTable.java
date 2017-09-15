@@ -25,7 +25,6 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "id";
     public static final String TRUE = "1";
     static final String COLUMN_CREATED_AT = "created_at";
-    private static final String DATABASE_NAME = "cw.db";
     private static final int DATABASE_VERSION = 1;
     private static final String X = BaseTable.class.getSimpleName();
     private static final String FATAL_ERROR_UNDEFINED_METHOD = "Undefined method";
@@ -33,7 +32,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     private final String tableName;
 
     BaseTable(final Context context, String tableName) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, context.getPackageName() + ".db", null, DATABASE_VERSION);
         this.context = context;
         this.tableName = tableName;
     }
@@ -85,14 +84,15 @@ public class BaseTable<T> extends SQLiteOpenHelper {
 
         final Cursor cur;
         if (whereColumn2 == null || whereColumnValue2 == null) {
-            //single column match query
+            System.out.println("single column match query");
             cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, null, "1");
         } else {
-            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumn2}, null, null, null, "1");
-
+            System.out.println("double column match query");
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, null, "1");
         }
 
         if (cur.moveToFirst()) {
+            System.out.println("value exists");
             valueToReturn = cur.getString(cur.getColumnIndex(columnToReturn));
         }
 

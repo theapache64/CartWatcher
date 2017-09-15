@@ -1,4 +1,4 @@
-package com.theah64.cartwatcher.widgets.utils;
+package com.theah64.retrokit.widgets.utils;
 
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -7,7 +7,8 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
-import com.theah64.cartwatcher.R;
+import com.theah64.retrokit.R;
+
 
 /**
  * Created by theapache64 on 15/9/17.

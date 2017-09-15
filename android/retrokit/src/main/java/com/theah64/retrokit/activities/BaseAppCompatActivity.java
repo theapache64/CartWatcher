@@ -1,10 +1,13 @@
 package com.theah64.retrokit.activities;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import com.theah64.retrokit.utils.DialogUtils;
 
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -15,6 +18,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
+
+    private DialogUtils dialogUtils;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -32,6 +37,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     protected void enableBackNavigationWithTitle(final String title) {
         configActionbar(title, null, true);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        dialogUtils = new DialogUtils(this);
     }
 
     protected void configActionbar(@Nullable final String title, @Nullable final String subtitle, boolean isBackNav) {
@@ -68,5 +80,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     public String getLogTag() {
         return this.getClass().getSimpleName();
+    }
+
+    public DialogUtils getDialogUtils() {
+        return dialogUtils;
     }
 }

@@ -1,21 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/activity_content_margin"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.theah64.cartwatcher.widgets.ValidTextInputLayout
-        android:id="@+id/vtilProductURL"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <com.theah64.cartwatcher.widgets.CustomEditText
+        <!--Product url-->
+        <com.theah64.retrokit.widgets.ValidTextInputLayout
+            android:id="@+id/vtilProductURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/Paste_product_URL_here" />
-    </com.theah64.cartwatcher.widgets.ValidTextInputLayout>
+            android:layout_marginBottom="8dp">
+
+            <com.theah64.retrokit.widgets.CustomEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Paste_product_URL_here" />
+        </com.theah64.retrokit.widgets.ValidTextInputLayout>
+
+        <!--Label-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/check_product_price_in_every" />
+
+        <!--Interval container-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:weightSum="2">
+
+            <!--Interval-->
+            <com.theah64.retrokit.widgets.ValidTextInputLayout
+                android:id="@+id/vtilHitInterval"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.theah64.retrokit.widgets.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Interval"
+                    android:inputType="number" />
+            </com.theah64.retrokit.widgets.ValidTextInputLayout>
+
+            <!--Interval type-->
+            <Spinner
+                android:id="@+id/spIntervalTypes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>

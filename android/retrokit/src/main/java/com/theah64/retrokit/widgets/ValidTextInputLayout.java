@@ -1,11 +1,11 @@
-package com.theah64.cartwatcher.widgets;
+package com.theah64.retrokit.widgets;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
 
-import com.theah64.cartwatcher.R;
+import com.theah64.retrokit.R;
 
 import java.util.regex.Pattern;
 
@@ -116,7 +116,11 @@ public final class ValidTextInputLayout extends TextInputLayout {
         public boolean isAllValid() {
             boolean isAllValid = true;
             for (final ValidTextInputLayout inputLayout : validInputLayouts) {
-                isAllValid = inputLayout.isMatch() && isAllValid;
+                boolean isMatch = inputLayout.isMatch();
+                if (isMatch) {
+                    inputLayout.setError(null);
+                }
+                isAllValid = isMatch && isAllValid;
             }
             return isAllValid;
         }

@@ -28,6 +28,7 @@ public class RetroKit {
     private int defaultProgressIndicatorColor;
     private boolean isDebug;
     private boolean versionCheck;
+    private boolean logNetwork;
 
     public static RetroKit init(final Context context) {
         if (instance == null) {
@@ -107,5 +108,14 @@ public class RetroKit {
     public RetroKit enableVersionCheck() {
         this.versionCheck = true;
         return this;
+    }
+
+    public RetroKit enableNetworkLog() {
+        this.logNetwork = true;
+        return this;
+    }
+
+    public boolean isLogNetwork() {
+        return logNetwork;
     }
 }

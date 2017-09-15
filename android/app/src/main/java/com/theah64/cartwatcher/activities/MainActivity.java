@@ -36,22 +36,5 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private static final String X = MainActivity.class.getSimpleName();
 
-    public String getValidRecentProductURLFromClipboard() {
 
-        String clipboardData = null;
-
-        final ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        final ClipData.Item clipData = clipboardManager.getPrimaryClip().getItemAt(0);
-        if (clipData != null) {
-            clipboardData = clipData.getText().toString();
-        }
-
-        if (clipboardData != null) {
-            if (clipboardData.contains("amazon.com") || clipboardData.contains("flipkart.com")) {
-                return clipboardData;
-            }
-        }
-
-        return null;
-    }
 }

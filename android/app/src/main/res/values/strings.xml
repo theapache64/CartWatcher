@@ -7,4 +7,7 @@
     <string name="Paste_product_URL_here">Paste product URL here</string>
     <string name="title_activity_add_product">Add Product</string>
     <string name="Empty">Empty</string>
+    <string name="You_ve_one_url_in_cboard">You\'ve one product url found in your clipboard, do you want to paste it here ?</string>
+    <string name="check_product_price_in_every">Check product price in every</string>
+    <string name="Interval">Interval</string>
 </resources>

@@ -65,6 +65,7 @@ dependencies {
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
     compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
 
     testCompile 'junit:junit:4.12'

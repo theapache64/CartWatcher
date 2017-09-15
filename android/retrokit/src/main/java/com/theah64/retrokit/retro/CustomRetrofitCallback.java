@@ -1,7 +1,5 @@
 package com.theah64.retrokit.retro;
 
-import com.theah64.retrokit.retro.BaseAPIResponse;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,6 +13,9 @@ public abstract class CustomRetrofitCallback<T extends BaseAPIResponse, D> imple
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+
+        System.out.println("Response :" + response.body().getData());
+
         final BaseAPIResponse<D> resp = response.body();
         if (resp.isError()) {
             onFailure(resp.getMessage());

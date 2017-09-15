@@ -1,4 +1,4 @@
-package com.theah64.cartwatcher.widgets;
+package com.theah64.retrokit.widgets;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,8 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
-import com.theah64.cartwatcher.R;
-import com.theah64.cartwatcher.widgets.utils.CustomWidgetUtils;
+import com.theah64.retrokit.R;
+import com.theah64.retrokit.widgets.utils.CustomWidgetUtils;
 
 import java.util.regex.Pattern;
 

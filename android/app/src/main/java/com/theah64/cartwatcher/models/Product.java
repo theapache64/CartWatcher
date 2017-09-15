@@ -11,14 +11,14 @@ import org.json.JSONObject;
 
 public class Product {
 
-    //Hit interval types
-    private static final int TYPE_SECOND = 1;
-    private static final int TYPE_MINUTE = 819;
-    private static final int TYPE_HOUR = 30;
-    private static final int TYPE_DAY = 370;
-    private static final int TYPE_WEEK = 168;
-    private static final int TYPE_MONTH = 322;
-    private static final int TYPE_YEAR = 230;
+    //Hit longerval types
+    public static final String INTERVAL_TYPE_SECOND = "SECOND";
+    public static final String INTERVAL_TYPE_MINUTE = "MINUTE";
+    public static final String INTERVAL_TYPE_HOUR = "HOUR";
+    public static final String INTERVAL_TYPE_DAY = "DAY";
+    public static final String INTERVAL_TYPE_WEEK = "WEEK";
+    public static final String INTERVAL_TYPE_MONTH = "MONTH";
+    public static final String INTERVAL_TYPE_YEAR = "YEAR";
 
     static final String SOURCE_AMAZON = "amazon";
     static final String SOURCE_FLIPKART = "flipkart";
@@ -38,10 +38,12 @@ public class Product {
     @SerializedName("product_url")
     private final String productUrl;
 
-    private final int hitInterval;
-    private final int hitIntervalType;
+    private long hitInterval;
+    private long hitIntervalInMillis;
+    private String hitIntervalType;
 
-    Product(String id, String title, long price, String source, String imageUrl, String specialId, String productUrl, int hitInterval, int hitIntervalType) {
+
+    Product(String id, String title, long price, String source, String imageUrl, String specialId, String productUrl, long hitInterval, String hitIntervalType) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -51,13 +53,27 @@ public class Product {
         this.productUrl = productUrl;
         this.hitInterval = hitInterval;
         this.hitIntervalType = hitIntervalType;
+        setHitIntervalInMillis(hitInterval, hitIntervalType);
     }
 
-    public int getHitInterval() {
+    public void setHitInterval(long hitInterval) {
+        this.hitInterval = hitInterval;
+    }
+
+
+    public void setHitIntervalType(String hitIntervalType) {
+        this.hitIntervalType = hitIntervalType;
+    }
+
+    public long getHitInterval() {
         return hitInterval;
     }
 
-    public int getHitIntervalType() {
+    public long getHitIntervalInMillis() {
+        return hitIntervalInMillis;
+    }
+
+    public String getHitIntervalType() {
         return hitIntervalType;
     }
 
@@ -89,12 +105,20 @@ public class Product {
         return source;
     }
 
+
     @Override
     public String toString() {
         return "Product{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", price=" + price +
                 ", source='" + source + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", specialId='" + specialId + '\'' +
+                ", productUrl='" + productUrl + '\'' +
+                ", hitInterval=" + hitInterval +
+                ", hitIntervalInMillis=" + hitIntervalInMillis +
+                ", hitIntervalType='" + hitIntervalType + '\'' +
                 '}';
     }
 
@@ -104,5 +128,46 @@ public class Product {
         joProduct.put("price", price);
         joProduct.put("source", source);
         return joProduct;
+    }
+
+    public void setHitIntervalInMillis(long interval, String intervalType) {
+        long hitIntervalInMillis = 0;
+
+        switch (intervalType) {
+
+            case INTERVAL_TYPE_SECOND:
+                hitIntervalInMillis = interval * 1000;
+                break;
+
+            case INTERVAL_TYPE_MINUTE:
+                hitIntervalInMillis = (interval * 1000) * 60;
+                break;
+
+            case INTERVAL_TYPE_HOUR:
+                hitIntervalInMillis = ((interval * 1000) * 60) * 60;
+                break;
+
+            case INTERVAL_TYPE_DAY:
+                hitIntervalInMillis = (((interval * 1000) * 60) * 60) * 24;
+                break;
+
+            case INTERVAL_TYPE_WEEK:
+                hitIntervalInMillis = ((((interval * 1000) * 60) * 60) * 24) * 7;
+                break;
+
+            case INTERVAL_TYPE_MONTH:
+                hitIntervalInMillis = (((((interval * 1000) * 60) * 60) * 24) * 7) * 30;
+                break;
+
+            case INTERVAL_TYPE_YEAR:
+                hitIntervalInMillis = ((((((interval * 1000) * 60) * 60) * 24) * 7) * 30) * 12;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid interval type " + intervalType);
+        }
+
+        System.out.println(interval + " " + intervalType + " in milliseconds is " + hitIntervalInMillis);
+        this.hitIntervalInMillis = hitIntervalInMillis;
     }
 }
