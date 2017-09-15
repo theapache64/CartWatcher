@@ -29,7 +29,7 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position, Product item) {
-
+        ImageLoa
     }
 
     @Override
