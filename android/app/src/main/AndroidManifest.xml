@@ -29,6 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.AddProductActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/title_activity_add_product"></activity>
     </application>
 

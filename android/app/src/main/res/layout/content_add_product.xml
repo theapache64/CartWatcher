@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.theah64.cartwatcher.widgets.ValidTextInputLayout
+        android:id="@+id/vtilProductURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.theah64.cartwatcher.widgets.CustomEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Paste_product_URL_here" />
+    </com.theah64.cartwatcher.widgets.ValidTextInputLayout>
+
 
 </LinearLayout>

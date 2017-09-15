@@ -6,4 +6,5 @@
     <string name="Product_exists">Product exists</string>
     <string name="Paste_product_URL_here">Paste product URL here</string>
     <string name="title_activity_add_product">Add Product</string>
+    <string name="Empty">Empty</string>
 </resources>
