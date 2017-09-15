@@ -19,6 +19,7 @@ public class Products extends BaseTable<Product> {
     private static final String COLUMN_HIT_INTERVAL = "hit_interval";
     private static final String COLUMN_HIT_INTERVAL_TYPE = "hit_interval_type";
     private static final String COLUMN_HIT_INTERVAL_IN_MILLIS = "hit_interval_in_millis";
+    private static final String COLUMN_IMAGE_URL = "image_url";
     private static Products instance;
 
     Products(Context context) {
@@ -41,8 +42,6 @@ public class Products extends BaseTable<Product> {
     @Override
     public long add(Product product) throws CartWatcherSQLException {
 
-        System.out.println("Adding product to db " + product);
-
         final ContentValues cv = new ContentValues();
         cv.put(COLUMN_SPECIAL_ID, product.getSpecialId());
         cv.put(COLUMN_TITLE, product.getTitle());
@@ -51,6 +50,7 @@ public class Products extends BaseTable<Product> {
         cv.put(COLUMN_HIT_INTERVAL, product.getHitInterval());
         cv.put(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType());
         cv.put(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis());
+        cv.put(COLUMN_IMAGE_URL, product.getImageUrl());
 
         final long rowId = this.getWritableDatabase().insert(getTableName(), null, cv);
         if (rowId == -1) {

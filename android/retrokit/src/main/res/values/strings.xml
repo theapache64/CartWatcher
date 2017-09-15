@@ -13,4 +13,6 @@
     <string name="NO">NO</string>
     <string name="YES">YES</string>
     <string name="Empty">Empty</string>
+    <string name="OK">OK</string>
+    <string name="Error">Error</string>
 </resources>

@@ -10,4 +10,5 @@
     <string name="You_ve_one_url_in_cboard">You\'ve one product url found in your clipboard, do you want to paste it here ?</string>
     <string name="check_product_price_in_every">Check product price in every</string>
     <string name="Interval">Interval</string>
+    <string name="Adding_product">Adding product...</string>
 </resources>

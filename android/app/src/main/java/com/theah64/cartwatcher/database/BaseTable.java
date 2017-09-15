@@ -84,15 +84,12 @@ public class BaseTable<T> extends SQLiteOpenHelper {
 
         final Cursor cur;
         if (whereColumn2 == null || whereColumnValue2 == null) {
-            System.out.println("single column match query");
             cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, null, "1");
         } else {
-            System.out.println("double column match query");
             cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, null, "1");
         }
 
         if (cur.moveToFirst()) {
-            System.out.println("value exists");
             valueToReturn = cur.getString(cur.getColumnIndex(columnToReturn));
         }
 

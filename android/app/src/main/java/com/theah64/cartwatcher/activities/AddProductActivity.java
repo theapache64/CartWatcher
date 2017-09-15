@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.BuildConfig;
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.Products;
@@ -116,10 +117,14 @@ public class AddProductActivity extends BaseAppCompatActivity {
             //Checking if the url is valid
             if (URLUtil.isValidUrl(productUrl)) {
 
+                final MaterialDialog progressDialog = getDialogUtils().getProgressDialog(R.string.Adding_product);
+                progressDialog.show();
+
                 //Valid url, so making API request
                 RetrofitClient.getClient().create(APIInterface.class).getProduct(productUrl).enqueue(new CustomRetrofitCallback<BaseAPIResponse<GetProductResponse>, GetProductResponse>() {
                     @Override
                     protected void onSuccess(GetProductResponse data) {
+                        progressDialog.dismiss();
 
                         System.out.println("Product loaded: " + data.getProduct());
 
@@ -139,16 +144,19 @@ public class AddProductActivity extends BaseAppCompatActivity {
                                 pTable.add(product);
                             } catch (CartWatcherSQLException e) {
                                 e.printStackTrace();
+                                getDialogUtils().showErrorDialog(e.getMessage());
                             }
                         } else {
                             //Product exist in db
-                            Toast.makeText(AddProductActivity.this, R.string.Product_exists, Toast.LENGTH_SHORT).show();
+                            getDialogUtils().showErrorDialog(R.string.Product_exists);
                         }
                     }
 
                     @Override
                     protected void onFailure(String message) {
-                        System.out.println("Product failed to load: " + message);
+                        progressDialog.dismiss();
+                        getDialogUtils().showErrorDialog(message);
+
                     }
                 });
 

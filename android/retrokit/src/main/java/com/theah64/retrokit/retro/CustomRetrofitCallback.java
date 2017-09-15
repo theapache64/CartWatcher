@@ -14,8 +14,6 @@ public abstract class CustomRetrofitCallback<T extends BaseAPIResponse, D> imple
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
 
-        System.out.println("Response :" + response.body().getData());
-
         final BaseAPIResponse<D> resp = response.body();
         if (resp.isError()) {
             onFailure(resp.getMessage());
