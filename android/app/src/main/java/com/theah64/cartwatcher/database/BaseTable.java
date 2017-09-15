@@ -75,12 +75,22 @@ public class BaseTable<T> extends SQLiteOpenHelper {
         throw new IllegalArgumentException(FATAL_ERROR_UNDEFINED_METHOD);
     }
 
-
     public String get(final String whereColumn, final String whereColumnValue, final String columnToReturn) {
+        return get(whereColumn, whereColumnValue, null, null, columnToReturn);
+    }
+
+    public String get(final String whereColumn1, final String whereColumnValue1, @Nullable final String whereColumn2, @Nullable final String whereColumnValue2, final String columnToReturn) {
 
         String valueToReturn = null;
 
-        final Cursor cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn + " = ? ", new String[]{whereColumnValue}, null, null, null, "1");
+        final Cursor cur;
+        if (whereColumn2 == null || whereColumnValue2 == null) {
+            //single column match query
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, null, "1");
+        } else {
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumn2}, null, null, null, "1");
+
+        }
 
         if (cur.moveToFirst()) {
             valueToReturn = cur.getString(cur.getColumnIndex(columnToReturn));

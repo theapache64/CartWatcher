@@ -33,7 +33,7 @@ public class Products extends BaseTable<Product> {
     }
 
     public boolean exist(Product product) {
-        return get(Products.COLUMN_SPECIAL_ID, product.getSpecialId(), Products.COLUMN_ID) != null;
+        return get(Products.COLUMN_SPECIAL_ID, product.getSpecialId(), Products.COLUMN_SOURCE, product.getSource(), Products.COLUMN_ID) != null;
     }
 
 
