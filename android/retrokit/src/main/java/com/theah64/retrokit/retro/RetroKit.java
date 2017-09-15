@@ -1,9 +1,16 @@
 package com.theah64.retrokit.retro;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.theah64.retrokit.R;
 import com.theah64.retrokit.utils.PreferenceUtils;
 import com.wang.avi.Indicator;
@@ -23,6 +30,7 @@ public class RetroKit {
     private static final String FONT_ROBOTO_BOLD = "fonts/Roboto-Bold.ttf";
     private static final String FONT_ROBOTO_MEDIUM = "fonts/Roboto-Medium.ttf";
     public static final String FONT_PACIFICO = "fonts/Pacifico.ttf";
+    private final Context context;
 
     private Indicator defaultProgressIndicator;
     private int defaultProgressIndicatorColor;
@@ -42,6 +50,7 @@ public class RetroKit {
     }
 
     private RetroKit(final Context context) {
+        this.context = context;
         this.defaultProgressIndicator = new BallPulseSyncIndicator();
         this.defaultProgressIndicatorColor = android.support.design.R.attr.colorPrimary;
         this.isDebug = false;
@@ -117,5 +126,39 @@ public class RetroKit {
 
     public boolean isLogNetwork() {
         return logNetwork;
+    }
+
+    public RetroKit enableImageLoader() {
+        init(context);
+        return this;
+    }
+
+    private static void initImageLoader(final Context context) {
+
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+
+        final DisplayImageOptions defaultImageOption = new DisplayImageOptions.Builder()
+                .cacheOnDisk(true)
+                .cacheInMemory(true)
+                .considerExifParams(true)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .showImageOnLoading(R.drawable.img_placeholder)
+                .showImageOnFail(R.drawable.img_placeholder)
+                .showImageForEmptyUri(R.drawable.img_placeholder)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+
+        config.defaultDisplayImageOptions(defaultImageOption);
+
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(100 * 1024 * 1024); // 100 MiB
+        config.memoryCacheSize(50 * 1024 * 1024);
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        //config.writeDebugLogs(); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 }

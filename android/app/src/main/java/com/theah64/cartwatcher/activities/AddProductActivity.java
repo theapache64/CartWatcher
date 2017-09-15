@@ -139,6 +139,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
                             product.setHitInterval(hitInterval);
                             product.setHitIntervalType(hitIntervalType);
                             product.setHitIntervalInMillis(hitInterval, hitIntervalType);
+                            product.setHitActive(true);
 
                             try {
                                 pTable.add(product);

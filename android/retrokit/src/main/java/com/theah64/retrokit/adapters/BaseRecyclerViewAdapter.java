@@ -74,7 +74,6 @@ public abstract class BaseRecyclerViewAdapter<V extends BaseRecyclerViewHolder, 
                 .playOn(row);
     }
 
-
     @LayoutRes
     protected abstract int getRowLayoutID();
 

@@ -28,7 +28,7 @@ public class Product {
     @SerializedName("title")
     private final String title;
     @SerializedName("price")
-    private final long price;
+    private final long currentPrice;
     @SerializedName("source")
     private final String source;
     @SerializedName("image_url")
@@ -42,18 +42,28 @@ public class Product {
     private long hitIntervalInMillis;
     private String hitIntervalType;
 
+    private final long recentPrice;
+    private boolean isHitActive;
 
-    Product(String id, String title, long price, String source, String imageUrl, String specialId, String productUrl, long hitInterval, String hitIntervalType) {
+
+    Product(String id, String title, long currentPrice, long recentPrice, String source, String imageUrl, String specialId, String productUrl, long hitInterval, String hitIntervalType, boolean isHitActive) {
         this.id = id;
         this.title = title;
-        this.price = price;
+        this.currentPrice = currentPrice;
+        this.recentPrice = recentPrice;
         this.source = source;
         this.imageUrl = imageUrl;
         this.specialId = specialId;
         this.productUrl = productUrl;
         this.hitInterval = hitInterval;
         this.hitIntervalType = hitIntervalType;
+        this.isHitActive = isHitActive;
+
         setHitIntervalInMillis(hitInterval, hitIntervalType);
+    }
+
+    public void setHitActive(boolean hitActive) {
+        isHitActive = hitActive;
     }
 
     public void setHitInterval(long hitInterval) {
@@ -63,6 +73,10 @@ public class Product {
 
     public void setHitIntervalType(String hitIntervalType) {
         this.hitIntervalType = hitIntervalType;
+    }
+
+    public void setHitIntervalInMillis(long hitIntervalInMillis) {
+        this.hitIntervalInMillis = hitIntervalInMillis;
     }
 
     public long getHitInterval() {
@@ -97,8 +111,8 @@ public class Product {
         return title;
     }
 
-    public long getPrice() {
-        return price;
+    public long getCurrentPrice() {
+        return currentPrice;
     }
 
     public String getSource() {
@@ -111,7 +125,7 @@ public class Product {
         return "Product{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", price=" + price +
+                ", currentPrice=" + currentPrice +
                 ", source='" + source + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", specialId='" + specialId + '\'' +
@@ -125,7 +139,7 @@ public class Product {
     public JSONObject toJSONObject() throws JSONException {
         final JSONObject joProduct = new JSONObject();
         joProduct.put("title", title);
-        joProduct.put("price", price);
+        joProduct.put("currentPrice", currentPrice);
         joProduct.put("source", source);
         return joProduct;
     }
@@ -169,5 +183,17 @@ public class Product {
 
         System.out.println(interval + " " + intervalType + " in milliseconds is " + hitIntervalInMillis);
         this.hitIntervalInMillis = hitIntervalInMillis;
+    }
+
+    public long getPriceFluctuated() {
+        return recentPrice - currentPrice;
+    }
+
+    public int getHitProgress() {
+        return 60;
+    }
+
+    public boolean isHitActive() {
+        return isHitActive;
     }
 }

@@ -1,8 +1,5 @@
 package com.theah64.cartwatcher.activities;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.theah64.cartwatcher.R;
-import com.theah64.cartwatcher.database.Products;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
 
 public class MainActivity extends BaseAppCompatActivity {
@@ -21,8 +17,6 @@ public class MainActivity extends BaseAppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        final Products products = Products.getInstance(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -19,7 +19,8 @@
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
             android:scaleType="centerInside"
-            android:src="@drawable/iphone" />
+            android:src="@drawable/iphone"
+            tools:ignore="ContentDescription" />
 
         <!--Product title and price variation container-->
         <LinearLayout
@@ -27,8 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/ivProductImage"
             android:layout_toRightOf="@id/ivProductImage"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:weightSum="100">
 
             <!--Title container-->
@@ -66,9 +67,18 @@
                         android:textSize="13sp"
                         app:iconLeft="@string/fa_rupee_iconify" />
 
+
+                    <!--Price fluctuation indicator-->
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:id="@+id/itvPriceFluctuationIndicator"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/green_500"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fa_arrow_down_iconify" />
+
                     <!--Price fluctuated-->
                     <com.theah64.retrokit.widgets.CustomTextView
-                        android:id="@+id/tvPriceFluctuated"
+                        android:id="@+id/ctvPriceFluctuated"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5000"

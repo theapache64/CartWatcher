@@ -46,7 +46,7 @@ public class DialogUtils {
                 .build();
     }
 
-    public void showErrorDialog(@StringRes  int message) {
+    public void showErrorDialog(@StringRes int message) {
         showErrorDialog(context.getString(message));
     }
 

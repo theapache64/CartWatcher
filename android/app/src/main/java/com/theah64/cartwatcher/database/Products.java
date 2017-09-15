@@ -20,6 +20,7 @@ public class Products extends BaseTable<Product> {
     private static final String COLUMN_HIT_INTERVAL_TYPE = "hit_interval_type";
     private static final String COLUMN_HIT_INTERVAL_IN_MILLIS = "hit_interval_in_millis";
     private static final String COLUMN_IMAGE_URL = "image_url";
+    private static final String COLUMN_IS_HIT_ACTIVE = "is_hit_active";
     private static Products instance;
 
     Products(Context context) {
@@ -51,6 +52,7 @@ public class Products extends BaseTable<Product> {
         cv.put(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType());
         cv.put(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis());
         cv.put(COLUMN_IMAGE_URL, product.getImageUrl());
+        cv.put(COLUMN_IS_HIT_ACTIVE, product.getImageUrl());
 
         final long rowId = this.getWritableDatabase().insert(getTableName(), null, cv);
         if (rowId == -1) {

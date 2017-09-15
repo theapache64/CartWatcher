@@ -23,6 +23,7 @@ public class CartWatcher extends Application {
                 .setRetrofitBaseURL("http://theapache64.xyz:8080/mock_api/get_json/cartwatcher/")
                 .enableVersionCheck()
                 .enableNetworkLog()
+                .enableImageLoader()
                 .setIconModule(new FontAwesomeModule())
                 .setDefaultFontPathAsRobotoRegular();
 
