@@ -11,6 +11,19 @@
         <attr name="iconLeftSize" />
         <attr name="iconLeftPadding" />
     </declare-styleable>
+    <declare-styleable name="CustomTextView">
+        <attr name="iconLeft" />
+        <attr name="iconLeftColor" />
+        <attr name="iconLeftSize" />
+        <attr name="iconLeftPadding" />
+        <attr name="isStrikeThrough" format="boolean" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomButton">
+        <attr name="iconLeft" />
+        <attr name="iconLeftColor" />
+        <attr name="iconLeftSize" />
+        <attr name="iconLeftPadding" />
+    </declare-styleable>
 
 </resources>

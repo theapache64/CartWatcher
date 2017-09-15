@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simple_selector_themed"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/row_content_margin">
+        <!--Product image-->
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/iphone" />
+
+        <!--Product title and price variation container-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/ivProductImage"
+            android:layout_toRightOf="@id/ivProductImage"
+            android:orientation="vertical">
+
+            <!--Title container-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--Product title-->
+                <TextView
+                    android:id="@+id/tvProductTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="iPhone 7s plus"
+                    android:textSize="15sp"
+                    app:fontPath="fonts/Roboto-Bold.ttf"
+                    tools:ignore="MissingPrefix" />
+
+                <!--Product price variation-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!--Current product price-->
+                    <com.theah64.retrokit.widgets.CustomTextView
+                        android:id="@+id/tvCurrentProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="5000"
+                        android:textSize="13sp"
+                        app:iconLeft="@string/fa_rupee_iconify" />
+
+                    <!--Price fluctuated-->
+                    <com.theah64.retrokit.widgets.CustomTextView
+                        android:id="@+id/tvPriceFluctuated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5000"
+                        android:textSize="13sp"
+                        app:iconLeft="@string/fa_rupee_iconify" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.joanzapata.iconify.widget.IconButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/fa_play_circle_iconify" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!--Next hit time-->
+    <ProgressBar
+        android:id="@+id/pbNextHit"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="50" />
+
+</LinearLayout>

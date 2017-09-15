@@ -2,4 +2,6 @@
 <resources>
     <dimen name="default_row_padding">8dp</dimen>
     <dimen name="activity_content_margin">8dp</dimen>
+    <dimen name="row_content_margin">8dp</dimen>
+
 </resources>
