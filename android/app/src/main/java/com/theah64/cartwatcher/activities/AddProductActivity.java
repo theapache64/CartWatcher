@@ -3,6 +3,7 @@ package com.theah64.cartwatcher.activities;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.webkit.URLUtil;
@@ -13,12 +14,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.BuildConfig;
 import com.theah64.cartwatcher.R;
+import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
-import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
+import com.theah64.cartwatcher.models.PriceHistory;
 import com.theah64.cartwatcher.models.Product;
 import com.theah64.cartwatcher.responses.GetProductResponse;
 import com.theah64.cartwatcher.utils.APIInterface;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
+import com.theah64.retrokit.exceptions.CustomRuntimeException;
 import com.theah64.retrokit.retro.BaseAPIResponse;
 import com.theah64.retrokit.retro.CustomRetrofitCallback;
 import com.theah64.retrokit.retro.RetrofitClient;
@@ -131,6 +134,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
                         final Product product = data.getProduct();
                         final Products pTable = Products.getInstance(AddProductActivity.this);
 
+
                         if (!pTable.exist(product)) {
 
                             final long hitInterval = Long.parseLong(vtilHitInterval.getString());
@@ -142,8 +146,22 @@ public class AddProductActivity extends BaseAppCompatActivity {
                             product.setHitActive(true);
 
                             try {
-                                pTable.add(product);
-                            } catch (CartWatcherSQLException e) {
+                                final long newProductId = pTable.add(product);
+
+                                //Adding first price history
+                                PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(String.valueOf(newProductId), product.getCurrentPrice()));
+
+                                //Setting result, so that can the products activity can load this item into recyclerview
+                                final Intent newProductIntent = new Intent();
+                                newProductIntent.putExtra(Product.KEY, product);
+                                setResult(RESULT_OK, newProductIntent);
+                                setResult(RESULT_OK, newProductIntent);
+
+                                Toast.makeText(AddProductActivity.this, "New product added", Toast.LENGTH_SHORT).show();
+
+                                finish();
+
+                            } catch (CustomRuntimeException e) {
                                 e.printStackTrace();
                                 getDialogUtils().showErrorDialog(e.getMessage());
                             }

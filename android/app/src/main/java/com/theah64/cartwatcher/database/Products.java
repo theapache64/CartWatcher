@@ -1,10 +1,11 @@
 package com.theah64.cartwatcher.database;
 
-import android.content.ContentValues;
+import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.cartwatcher.models.Product;
+import com.theah64.retrokit.database.AddBuilder;
+import com.theah64.retrokit.database.BaseTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,19 @@ public class Products extends BaseTable<Product> {
     private static final String COLUMN_HIT_INTERVAL_IN_MILLIS = "hit_interval_in_millis";
     private static final String COLUMN_IMAGE_URL = "image_url";
     private static final String COLUMN_IS_HIT_ACTIVE = "is_hit_active";
+
+    @SuppressLint("StaticFieldLeak")
     private static Products instance;
 
-    Products(Context context) {
+    private Products(Context context) {
         super(context, "products");
     }
 
     public static Products getInstance(Context context) {
         if (instance == null) {
             instance = new Products(context);
+        } else {
+            instance.setContext(context);
         }
 
         return instance;
@@ -44,28 +49,25 @@ public class Products extends BaseTable<Product> {
 
 
     @Override
-    public long add(Product product) throws CartWatcherSQLException {
+    public long add(Product product) {
 
-        final ContentValues cv = new ContentValues();
-        cv.put(COLUMN_SPECIAL_ID, product.getSpecialId());
-        cv.put(COLUMN_TITLE, product.getTitle());
-        cv.put(COLUMN_SOURCE, product.getSource());
-        cv.put(COLUMN_PRODUCT_URL, product.getProductUrl());
-        cv.put(COLUMN_HIT_INTERVAL, product.getHitInterval());
-        cv.put(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType());
-        cv.put(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis());
-        cv.put(COLUMN_IMAGE_URL, product.getImageUrl());
-        cv.put(COLUMN_IS_HIT_ACTIVE, product.isHitActive());
-
-        final long rowId = this.getWritableDatabase().insert(getTableName(), null, cv);
-        if (rowId == -1) {
-            throw new CartWatcherSQLException("Failed to add product");
-        }
-        return rowId;
+        return new AddBuilder(this)
+                .add(COLUMN_SPECIAL_ID, product.getSpecialId())
+                .add(COLUMN_TITLE, product.getTitle())
+                .add(COLUMN_SOURCE, product.getSource())
+                .add(COLUMN_PRODUCT_URL, product.getProductUrl())
+                .add(COLUMN_HIT_INTERVAL, product.getHitInterval())
+                .add(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType())
+                .add(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis())
+                .add(COLUMN_IMAGE_URL, product.getImageUrl())
+                .add(COLUMN_IS_HIT_ACTIVE, product.isHitActive())
+                .done(true);
     }
 
     @Override
     public List<Product> getAll() {
         return new ArrayList<>();
     }
+
+
 }

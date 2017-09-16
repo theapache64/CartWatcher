@@ -5,11 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by theapache64 on 13/9/17.
  */
 
-public class Product {
+public class Product implements Serializable {
 
     //Hit longerval types
     public static final String INTERVAL_TYPE_SECOND = "SECOND";
@@ -22,6 +24,7 @@ public class Product {
 
     static final String SOURCE_AMAZON = "amazon";
     static final String SOURCE_FLIPKART = "flipkart";
+    public static final String KEY = "product";
 
     private final String id;
 

@@ -1,4 +1,4 @@
-package com.theah64.cartwatcher.database;
+package com.theah64.retrokit.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.retrokit.utils.FileUtils;
 
 import java.io.IOException;
@@ -28,13 +27,18 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String X = BaseTable.class.getSimpleName();
     private static final String FATAL_ERROR_UNDEFINED_METHOD = "Undefined method";
-    private final Context context;
+    protected Context context;
     private final String tableName;
 
-    BaseTable(final Context context, String tableName) {
+    protected BaseTable(final Context context, String tableName) {
         super(context, context.getPackageName() + ".db", null, DATABASE_VERSION);
         this.context = context;
         this.tableName = tableName;
+    }
+
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -70,7 +74,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     }
 
 
-    public long add(T newInstance) throws CartWatcherSQLException {
+    public long add(T newInstance) {
         throw new IllegalArgumentException(FATAL_ERROR_UNDEFINED_METHOD);
     }
 
@@ -141,7 +145,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
         return context;
     }
 
-    String getTableName() {
+    public String getTableName() {
         return tableName;
     }
 
