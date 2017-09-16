@@ -46,9 +46,9 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
 
         holder.tvProductTitle.setText(product.getTitle());
         holder.tvCurrentProductPrice.setText(String.valueOf(product.getCurrentPrice()));
-        holder.tvPriceFluctuated.setText(String.valueOf(Math.abs(product.getPriceFluctuated())));
+        holder.ctvPriceFluctuated.setText(String.valueOf(Math.abs(product.getPriceFluctuated())));
         final boolean isPriceRise = product.getPriceFluctuated() > 0;
-        holder.itvPriceFluctuationIndicator.setText(isPriceRise ? R.string.fa_caret_up : R.string.fa_caret_down);
+        holder.itvPriceFluctuationIndicator.setText(isPriceRise ? R.string.fa_caret_up_iconify : R.string.fa_caret_down_iconify);
         holder.itvPriceFluctuationIndicator.setTextColor(ContextCompat.getColor(context, isPriceRise ? R.color.red_500 : R.color.green_500));
 
         //Starting count down timer
@@ -85,8 +85,8 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         @BindView(R.id.tvCurrentProductPrice)
         TextView tvCurrentProductPrice;
 
-        @BindView(R.id.tvPriceFluctuated)
-        TextView tvPriceFluctuated;
+        @BindView(R.id.ctvPriceFluctuated)
+        TextView ctvPriceFluctuated;
 
         @BindView(R.id.pbNextHit)
         ProgressBar pbNextHit;

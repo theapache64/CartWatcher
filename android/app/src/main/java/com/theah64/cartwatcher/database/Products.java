@@ -6,6 +6,9 @@ import android.content.Context;
 import com.theah64.cartwatcher.exceptions.CartWatcherSQLException;
 import com.theah64.cartwatcher.models.Product;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by theapache64 on 14/9/17.
  */
@@ -52,12 +55,17 @@ public class Products extends BaseTable<Product> {
         cv.put(COLUMN_HIT_INTERVAL_TYPE, product.getHitIntervalType());
         cv.put(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis());
         cv.put(COLUMN_IMAGE_URL, product.getImageUrl());
-        cv.put(COLUMN_IS_HIT_ACTIVE, product.getImageUrl());
+        cv.put(COLUMN_IS_HIT_ACTIVE, product.isHitActive());
 
         final long rowId = this.getWritableDatabase().insert(getTableName(), null, cv);
         if (rowId == -1) {
             throw new CartWatcherSQLException("Failed to add product");
         }
         return rowId;
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return new ArrayList<>();
     }
 }

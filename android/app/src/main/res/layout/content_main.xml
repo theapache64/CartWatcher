@@ -8,9 +8,10 @@
     tools:context="com.theah64.cartwatcher.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.theah64.retrokit.widgets.CustomRecyclerView
+        android:id="@+id/crvProducts"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World" />
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

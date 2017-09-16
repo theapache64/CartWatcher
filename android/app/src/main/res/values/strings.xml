@@ -11,4 +11,6 @@
     <string name="check_product_price_in_every">Check product price in every</string>
     <string name="Interval">Interval</string>
     <string name="Adding_product">Adding product...</string>
+    <string name="No_product_added">No product added</string>
+    <string name="ADD">ADD</string>
 </resources>

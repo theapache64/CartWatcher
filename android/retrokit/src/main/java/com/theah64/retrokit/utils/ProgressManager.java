@@ -24,7 +24,7 @@ public class ProgressManager {
 
     public static final int ERROR_TYPE_NETWORK_ERROR = 844;
     public static final int ERROR_TYPE_SERVER_ERROR = 532;
-    private static final int ERROR_TYPE_UNKNOWN_ERROR = 202;
+    public static final int ERROR_TYPE_UNKNOWN_ERROR = 202;
 
     private final View progressLayout, mainView;
     private final ImageView ivErrorIcon;
@@ -42,8 +42,8 @@ public class ProgressManager {
         this(activity, (ViewGroup) activity.getWindow().getDecorView().getRootView(), mainViewId, callback, null);
     }
 
-    public ProgressManager(final Activity activity, final ViewGroup rootLayout, @IdRes final int mainViewId, final Callback callback, @Nullable String retryButtonText) {
-        this.context = activity;
+    public ProgressManager(final Context context, final ViewGroup rootLayout, @IdRes final int mainViewId, final Callback callback, @Nullable String retryButtonText) {
+        this.context = context;
         this.callback = callback;
         this.retryButtonText = retryButtonText;
 
@@ -53,7 +53,7 @@ public class ProgressManager {
             throw new IllegalArgumentException("main_view couldn't found in the given layout ");
         }
 
-        progressLayout = LayoutInflater.from(activity).inflate(R.layout.progress_layout, rootLayout, false);
+        progressLayout = LayoutInflater.from(context).inflate(R.layout.progress_layout, rootLayout, false);
         ((ViewGroup) mainView.getParent()).addView(progressLayout);
 
         ivErrorIcon = (ImageView) progressLayout.findViewById(R.id.ivErrorIcon);
@@ -62,11 +62,11 @@ public class ProgressManager {
         final RetroKit retroKit = RetroKit.getInstance();
 
         pbLoading.setIndicator(retroKit.getDefaultProgressIndicator());
-        pbLoading.setIndicatorColor(ContextCompat.getColor(context, retroKit.getDefaultProgressIndicatorColor()));
+        pbLoading.setIndicatorColor(ContextCompat.getColor(this.context, retroKit.getDefaultProgressIndicatorColor()));
 
         tvMessage = (TextView) progressLayout.findViewById(R.id.tvMessage);
         bRetry = (Button) progressLayout.findViewById(R.id.bRetry);
-        bRetry.setText(retryButtonText != null ? retryButtonText : activity.getString(R.string.RETRY));
+        bRetry.setText(retryButtonText != null ? retryButtonText : context.getString(R.string.RETRY));
 
         if (callback != null) {
             bRetry.setOnClickListener(new View.OnClickListener() {
