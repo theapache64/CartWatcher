@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class ProgressManager {
         final RetroKit retroKit = RetroKit.getInstance();
 
         pbLoading.setIndicator(retroKit.getDefaultProgressIndicator());
-        pbLoading.setIndicatorColor(ContextCompat.getColor(this.context, retroKit.getDefaultProgressIndicatorColor()));
+        pbLoading.setIndicatorColor(retroKit.getDefaultProgressIndicatorColor());
 
         tvMessage = (TextView) progressLayout.findViewById(R.id.tvMessage);
         bRetry = (Button) progressLayout.findViewById(R.id.bRetry);

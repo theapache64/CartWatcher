@@ -1,7 +1,9 @@
 package com.theah64.retrokit.retro;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.util.TypedValue;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
@@ -52,10 +54,18 @@ public class RetroKit {
     private RetroKit(final Context context) {
         this.context = context;
         this.defaultProgressIndicator = new BallPulseSyncIndicator();
-        this.defaultProgressIndicatorColor = android.support.design.R.attr.colorPrimary;
+        this.defaultProgressIndicatorColor = fetchAccentColor(context);
         this.isDebug = false;
 
         PreferenceUtils.init(context);
+    }
+
+    private static int fetchAccentColor(Context mContext) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = mContext.obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorAccent});
+        int color = a.getColor(0, 0);
+        a.recycle();
+        return color;
     }
 
     public boolean isDebug() {

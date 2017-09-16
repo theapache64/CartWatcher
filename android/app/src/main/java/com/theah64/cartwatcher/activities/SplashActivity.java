@@ -34,7 +34,7 @@ public class SplashActivity extends BaseVersionCheckerSplashActivity {
 
     @Override
     protected void onValidVersionSplashFinished() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, ProductsActivity.class));
         finish();
     }
 }

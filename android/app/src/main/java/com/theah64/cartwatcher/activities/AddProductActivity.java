@@ -36,6 +36,7 @@ import butterknife.OnClick;
 
 public class AddProductActivity extends BaseAppCompatActivity {
 
+    public static final int RQ_CODE = 45;
     @BindView(R.id.vtilProductURL)
     ValidTextInputLayout vtilProductURL;
 
@@ -134,8 +135,9 @@ public class AddProductActivity extends BaseAppCompatActivity {
                         final Product product = data.getProduct();
                         final Products pTable = Products.getInstance(AddProductActivity.this);
 
+                        final String oldProductId = pTable.get(Products.COLUMN_SPECIAL_ID, product.getSpecialId(), Products.COLUMN_SOURCE, product.getSource(), Products.COLUMN_ID);
 
-                        if (!pTable.exist(product)) {
+                        if (oldProductId == null) {
 
                             final long hitInterval = Long.parseLong(vtilHitInterval.getString());
                             final String hitIntervalType = spIntervalTypes.getSelectedItem().toString();
@@ -166,6 +168,10 @@ public class AddProductActivity extends BaseAppCompatActivity {
                                 getDialogUtils().showErrorDialog(e.getMessage());
                             }
                         } else {
+
+                            //Adding price history
+                            PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(oldProductId, product.getCurrentPrice()));
+
                             //Product exist in db
                             getDialogUtils().showErrorDialog(R.string.Product_exists);
                         }

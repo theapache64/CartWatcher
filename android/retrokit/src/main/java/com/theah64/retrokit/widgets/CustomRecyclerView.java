@@ -47,4 +47,8 @@ public class CustomRecyclerView extends RecyclerView {
             pm.showMainView();
         }
     }
+
+    public void hideError() {
+        pm.showMainView();
+    }
 }

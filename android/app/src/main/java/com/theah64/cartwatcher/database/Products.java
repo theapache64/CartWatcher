@@ -6,6 +6,7 @@ import android.content.Context;
 import com.theah64.cartwatcher.models.Product;
 import com.theah64.retrokit.database.AddBuilder;
 import com.theah64.retrokit.database.BaseTable;
+import com.theah64.retrokit.database.CustomCursor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,17 @@ import java.util.List;
 
 public class Products extends BaseTable<Product> {
 
-    private static final String COLUMN_SPECIAL_ID = "special_id";
-    private static final String COLUMN_TITLE = "title";
-    private static final String COLUMN_SOURCE = "source";
-    private static final String COLUMN_PRODUCT_URL = "product_url";
-    private static final String COLUMN_HIT_INTERVAL = "hit_interval";
-    private static final String COLUMN_HIT_INTERVAL_TYPE = "hit_interval_type";
+    public static final String COLUMN_SPECIAL_ID = "special_id";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_SOURCE = "source";
+    public static final String COLUMN_PRODUCT_URL = "product_url";
+    public static final String COLUMN_HIT_INTERVAL = "hit_interval";
+    public static final String COLUMN_HIT_INTERVAL_TYPE = "hit_interval_type";
     private static final String COLUMN_HIT_INTERVAL_IN_MILLIS = "hit_interval_in_millis";
-    private static final String COLUMN_IMAGE_URL = "image_url";
-    private static final String COLUMN_IS_HIT_ACTIVE = "is_hit_active";
+    public static final String COLUMN_IMAGE_URL = "image_url";
+    public static final String COLUMN_IS_HIT_ACTIVE = "is_hit_active";
+    public static final String COLUMN_AS_CURRENT_PRICE = "current_price";
+    public static final String COLUMN_AS_RECENT_PRICE = "recent_price";
 
     @SuppressLint("StaticFieldLeak")
     private static Products instance;
@@ -66,7 +69,16 @@ public class Products extends BaseTable<Product> {
 
     @Override
     public List<Product> getAll() {
-        return new ArrayList<>();
+        final List<Product> products = new ArrayList<>();
+        final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS previous_price, ph.created_at AS last_hit FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
+        if (cursor.getCursor().moveToFirst()) {
+            do {
+                products.add(Product.parse(cursor));
+            } while (cursor.getCursor().moveToFirst());
+        }
+
+        cursor.getCursor().close();
+        return products;
     }
 
 

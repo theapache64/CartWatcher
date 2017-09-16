@@ -19,17 +19,18 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseAppCompatActivity implements ProductsAdapter.ProductsAdapterCallback {
+public class ProductsActivity extends BaseAppCompatActivity implements ProductsAdapter.ProductsAdapterCallback {
 
     @BindView(R.id.crvProducts)
     CustomRecyclerView crvProducts;
 
     private List<Product> products;
+    private ProductsAdapter productsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentViewWithButterKnife(R.layout.activity_main);
+        setContentViewWithButterKnife(R.layout.activity_products);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -37,24 +38,29 @@ public class MainActivity extends BaseAppCompatActivity implements ProductsAdapt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddProductActivity.class));
+                launchAddProductActivity();
             }
         });
 
         //Getting all products from database
         products = Products.getInstance(this).getAll();
+        productsAdapter = new ProductsAdapter(this, products, this);
 
         crvProducts.setLayoutManager(new LinearLayoutManager(this));
-        crvProducts.setAdapter(new ProductsAdapter(this, products, this), R.string.No_product_added, new ProgressManager.Callback() {
+        crvProducts.setAdapter(productsAdapter, R.string.No_product_added, new ProgressManager.Callback() {
             @Override
             public void onRetryButtonClicked() {
-                startActivity(new Intent(MainActivity.this, AddProductActivity.class));
+                launchAddProductActivity();
             }
         }, getString(R.string.ADD));
 
     }
 
-    private static final String X = MainActivity.class.getSimpleName();
+    private void launchAddProductActivity() {
+        startActivityForResult(new Intent(ProductsActivity.this, AddProductActivity.class), AddProductActivity.RQ_CODE);
+    }
+
+    private static final String X = ProductsActivity.class.getSimpleName();
 
 
     @Override
@@ -65,5 +71,22 @@ public class MainActivity extends BaseAppCompatActivity implements ProductsAdapt
     @Override
     public void onHitControllerClicked(int position) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AddProductActivity.RQ_CODE && resultCode == AddProductActivity.RESULT_OK) {
+            //New product added
+            /*products.add((Product) data.getSerializableExtra(Product.KEY));
+            productsAdapter.notifyItemInserted(0);
+
+            if (products.size() == 1) {
+                //it's first product, so we got to hide the previous error
+                crvProducts.hideError();
+            }*/
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

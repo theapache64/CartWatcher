@@ -1,6 +1,8 @@
 package com.theah64.cartwatcher.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.theah64.cartwatcher.database.Products;
+import com.theah64.retrokit.database.CustomCursor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -198,5 +200,21 @@ public class Product implements Serializable {
 
     public boolean isHitActive() {
         return isHitActive;
+    }
+
+    public static Product parse(CustomCursor cursor) {
+        return new Product(
+                cursor.getStringByColumnIndex(Products.COLUMN_ID),
+                cursor.getStringByColumnIndex(Products.COLUMN_TITLE),
+                cursor.getLongByColumnIndex(Products.COLUMN_AS_CURRENT_PRICE),
+                cursor.getLongByColumnIndex(Products.COLUMN_AS_RECENT_PRICE),
+                cursor.getStringByColumnIndex(Products.COLUMN_SOURCE),
+                cursor.getStringByColumnIndex(Products.COLUMN_IMAGE_URL),
+                cursor.getStringByColumnIndex(Products.COLUMN_SPECIAL_ID),
+                cursor.getStringByColumnIndex(Products.COLUMN_PRODUCT_URL),
+                cursor.getLongByColumnIndex(Products.COLUMN_HIT_INTERVAL),
+                cursor.getStringByColumnIndex(Products.COLUMN_HIT_INTERVAL_TYPE),
+                cursor.getBooleanByColumnIndex(Products.COLUMN_IS_HIT_ACTIVE)
+        );
     }
 }
