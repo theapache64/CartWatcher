@@ -138,6 +138,8 @@ public class Product implements Serializable {
                 ", hitInterval=" + hitInterval +
                 ", hitIntervalInMillis=" + hitIntervalInMillis +
                 ", hitIntervalType='" + hitIntervalType + '\'' +
+                ", recentPrice=" + recentPrice +
+                ", isHitActive=" + isHitActive +
                 '}';
     }
 

@@ -74,7 +74,7 @@ public class Products extends BaseTable<Product> {
         if (cursor.getCursor().moveToFirst()) {
             do {
                 products.add(Product.parse(cursor));
-            } while (cursor.getCursor().moveToFirst());
+            } while (cursor.getCursor().moveToNext());
         }
 
         cursor.getCursor().close();

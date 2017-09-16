@@ -2,6 +2,7 @@ package com.theah64.retrokit.widgets.utils;
 
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ public class CustomWidgetUtils {
         this.isStrikeThroughRes = isStrikeThroughRes;
     }
 
-    public void init(final TextView v, AttributeSet attrs) {
+    public void init(final TextView v, @Nullable AttributeSet attrs) {
 
         if (attrs != null) {
             //Collecting custom attrs

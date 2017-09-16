@@ -139,7 +139,7 @@ public class RetroKit {
     }
 
     public RetroKit enableImageLoader() {
-        init(context);
+        initImageLoader(context);
         return this;
     }
 

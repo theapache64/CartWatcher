@@ -28,6 +28,7 @@ public class CustomTextView extends AppCompatTextView {
         init(attrs);
     }
 
+
     private void init(AttributeSet attrs) {
         new CustomWidgetUtils(
                 R.styleable.CustomTextView,

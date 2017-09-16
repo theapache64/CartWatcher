@@ -65,16 +65,16 @@
                         android:layout_marginRight="10dp"
                         android:text="5000"
                         android:textSize="13sp"
-                        app:iconLeft="@string/fa_rupee_iconify" />
+                        app:iconLeft="@string/fa_rupee" />
 
 
                     <!--Price fluctuation indicator-->
                     <com.joanzapata.iconify.widget.IconTextView
                         android:id="@+id/itvPriceFluctuationIndicator"
                         android:layout_width="wrap_content"
-                        android:textColor="@color/green_500"
                         android:layout_height="wrap_content"
-                        android:text="@string/fa_arrow_down_iconify" />
+                        android:text="@string/fa_arrow_down"
+                        android:textColor="@color/green_500" />
 
                     <!--Price fluctuated-->
                     <com.theah64.retrokit.widgets.CustomTextView
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:text="5000"
                         android:textSize="13sp"
-                        app:iconLeft="@string/fa_rupee_iconify" />
+                        app:iconLeft="@string/fa_rupee" />
 
                 </LinearLayout>
 

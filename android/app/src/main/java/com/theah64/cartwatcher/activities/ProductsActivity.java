@@ -77,13 +77,13 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AddProductActivity.RQ_CODE && resultCode == AddProductActivity.RESULT_OK) {
             //New product added
-            /*products.add((Product) data.getSerializableExtra(Product.KEY));
+            products.add((Product) data.getSerializableExtra(Product.KEY));
             productsAdapter.notifyItemInserted(0);
 
             if (products.size() == 1) {
                 //it's first product, so we got to hide the previous error
                 crvProducts.hideError();
-            }*/
+            }
 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
