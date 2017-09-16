@@ -8,20 +8,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.joanzapata.iconify.widget.IconButton;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.models.Product;
+import com.theah64.retrokit.adapters.BaseButterknifeRecyclerViewHolder;
 import com.theah64.retrokit.adapters.BaseRecyclerViewAdapter;
-import com.theah64.retrokit.adapters.BaseRecyclerViewHolder;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -46,10 +44,22 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
 
         holder.tvProductTitle.setText(product.getTitle());
         holder.tvCurrentProductPrice.setText(String.valueOf(product.getCurrentPrice()));
-        holder.ctvPriceFluctuated.setText(String.valueOf(Math.abs(product.getPriceFluctuated())));
-        final boolean isPriceRise = product.getPriceFluctuated() > 0;
-        holder.itvPriceFluctuationIndicator.setText(isPriceRise ? R.string.fa_caret_up_iconify : R.string.fa_caret_down_iconify);
-        holder.itvPriceFluctuationIndicator.setTextColor(ContextCompat.getColor(context, isPriceRise ? R.color.red_500 : R.color.green_500));
+
+
+        if (product.getPriceFluctuated() != 0) {
+
+            holder.ctvPriceFluctuated.setVisibility(View.VISIBLE);
+            holder.itvPriceFluctuationIndicator.setVisibility(View.VISIBLE);
+
+            holder.ctvPriceFluctuated.setText(String.valueOf(Math.abs(product.getPriceFluctuated())));
+
+            final boolean isPriceRise = product.getPriceFluctuated() > 0;
+            holder.itvPriceFluctuationIndicator.setText(isPriceRise ? R.string.fa_caret_up_iconify : R.string.fa_caret_down_iconify);
+            holder.itvPriceFluctuationIndicator.setTextColor(ContextCompat.getColor(context, isPriceRise ? R.color.red_500 : R.color.green_500));
+        } else {
+            holder.ctvPriceFluctuated.setVisibility(View.GONE);
+            holder.itvPriceFluctuationIndicator.setVisibility(View.GONE);
+        }
 
         //Starting count down timer
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -60,7 +70,7 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
             }
         }, 0, 1000);
 
-        holder.ibHitControl.setText(product.isHitActive() ? R.string.fa_stop_circle_o : R.string.fa_play_circle_o);
+        holder.ibHitControl.setText(product.isHitActive() ? R.string.fa_stop_circle_o_iconify : R.string.fa_play_circle_o_iconify);
     }
 
 
@@ -74,7 +84,7 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         return new ViewHolder(row, this);
     }
 
-    class ViewHolder extends BaseRecyclerViewHolder<Product> {
+    class ViewHolder extends BaseButterknifeRecyclerViewHolder<Product> {
 
         @BindView(R.id.ivProductImage)
         ImageView ivProductImage;
@@ -92,14 +102,13 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         ProgressBar pbNextHit;
 
         @BindView(R.id.ibHitControl)
-        IconButton ibHitControl;
+        IconTextView ibHitControl;
 
         @BindView(R.id.itvPriceFluctuationIndicator)
         IconTextView itvPriceFluctuationIndicator;
 
         ViewHolder(View row, BaseRecyclerViewAdapter adapter) {
             super(row, adapter);
-            ButterKnife.bind(this, row);
         }
 
         @OnClick(R.id.ibHitControl)

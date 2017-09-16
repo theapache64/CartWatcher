@@ -36,7 +36,7 @@ public class SimpleRecyclerViewAdapter extends BaseRecyclerViewAdapter<SimpleRec
         return new ViewHolder(row, this);
     }
 
-    class ViewHolder extends BaseRecyclerViewHolder {
+    class ViewHolder extends BaseButterknifeRecyclerViewHolder {
         final TextView tvTitle, tvSubTitle;
 
         ViewHolder(View row, BaseRecyclerViewAdapter adapter) {

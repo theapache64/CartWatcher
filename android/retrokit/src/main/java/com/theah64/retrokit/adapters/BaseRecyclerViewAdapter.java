@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by shifar on 15/9/16.
  */
-public abstract class BaseRecyclerViewAdapter<V extends BaseRecyclerViewHolder, M> extends RecyclerView.Adapter<V> {
+public abstract class BaseRecyclerViewAdapter<V extends BaseButterknifeRecyclerViewHolder, M> extends RecyclerView.Adapter<V> {
 
 
     private static final long DEFAULT_ANIMATION_DURATION = 1000;

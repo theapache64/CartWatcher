@@ -193,10 +193,11 @@ public class Product implements Serializable {
     }
 
     public long getPriceFluctuated() {
-        return recentPrice - currentPrice;
+        return recentPrice != 0 ? currentPrice - recentPrice : 0;
     }
 
     public int getHitProgress() {
+        //Calc hit progress from current time and last hit and next hit
         return 60;
     }
 

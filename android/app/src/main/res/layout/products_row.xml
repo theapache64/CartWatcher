@@ -46,8 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:text="iPhone 7s plus"
-                    android:textSize="15sp"
-                    app:fontPath="fonts/Roboto-Bold.ttf"
+                    android:textSize="13sp"
+                    app:fontPath="fonts/Roboto-Medium.ttf"
                     tools:ignore="MissingPrefix" />
 
                 <!--Product price variation-->
@@ -65,16 +65,15 @@
                         android:layout_marginRight="10dp"
                         android:text="5000"
                         android:textSize="13sp"
-                        app:iconLeft="@string/fa_rupee" />
+                        app:iconLeft="@string/fa_rupee"
+                        app:iconLeftPadding="1dp" />
 
 
                     <!--Price fluctuation indicator-->
                     <com.joanzapata.iconify.widget.IconTextView
                         android:id="@+id/itvPriceFluctuationIndicator"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fa_arrow_down"
-                        android:textColor="@color/green_500" />
+                        android:layout_height="wrap_content" />
 
                     <!--Price fluctuated-->
                     <com.theah64.retrokit.widgets.CustomTextView
@@ -82,18 +81,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5000"
-                        android:textSize="13sp"
-                        app:iconLeft="@string/fa_rupee" />
+                        android:textColor="@color/grey_600"
+                        android:textSize="10sp"
+                        app:iconLeft="@string/fa_rupee"
+                        app:iconLeftPadding="1dp"
+                        app:iconLeftSize="5sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <com.joanzapata.iconify.widget.IconButton
+            <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/ibHitControl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="20" />
+                android:layout_margin="10dp"
+                android:layout_weight="20"
+                android:gravity="end"
+                android:textSize="23sp" />
         </LinearLayout>
 
     </RelativeLayout>

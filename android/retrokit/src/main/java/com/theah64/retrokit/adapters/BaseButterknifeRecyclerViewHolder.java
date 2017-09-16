@@ -10,9 +10,9 @@ import butterknife.ButterKnife;
  * Created by theapache64 on 9/2/17.
  */
 
-public class BaseRecyclerViewHolder<M> extends RecyclerView.ViewHolder {
+public class BaseButterknifeRecyclerViewHolder<M> extends RecyclerView.ViewHolder {
 
-    public BaseRecyclerViewHolder(View row, final BaseRecyclerViewAdapter adapter) {
+    public BaseButterknifeRecyclerViewHolder(View row, final BaseRecyclerViewAdapter adapter) {
         super(row);
         ButterKnife.bind(this, row);
 

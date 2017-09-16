@@ -70,7 +70,7 @@ public class Products extends BaseTable<Product> {
     @Override
     public List<Product> getAll() {
         final List<Product> products = new ArrayList<>();
-        final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS previous_price, ph.created_at AS last_hit FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
+        final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS recent_price, ph.created_at AS last_hit FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
         if (cursor.getCursor().moveToFirst()) {
             do {
                 products.add(Product.parse(cursor));
