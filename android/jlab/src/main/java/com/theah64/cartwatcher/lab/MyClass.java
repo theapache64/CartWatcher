@@ -6,12 +6,12 @@ import java.io.IOException;
 public class MyClass {
 
     public static void main(String[] args) throws IOException {
-        int hitInterval = 4000;
-        int lastHitAt = 0;
-        int currentTime = 2000;
-        int nextHitAt = 4000;
 
-        System.out.println( );
+        int start = 800;
+        int now = 1400;
+        int end = 1200;
+
+        System.out.println(TimeUtils.getPercentageFinished(start, now, end));
     }
 
 }
