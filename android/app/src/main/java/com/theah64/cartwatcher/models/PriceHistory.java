@@ -5,6 +5,7 @@ package com.theah64.cartwatcher.models;
  */
 
 public class PriceHistory {
+    
     private final String productId;
     private final long price;
 

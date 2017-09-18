@@ -26,11 +26,16 @@
         <activity
             android:name=".activities.ProductsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddProductActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_add_product"></activity>
+            android:label="@string/title_activity_add_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".PriceUpdaterService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

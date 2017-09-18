@@ -1,5 +1,7 @@
 package com.theah64.cartwatcher.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.BuildConfig;
+import com.theah64.cartwatcher.PriceUpdaterService;
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
@@ -49,7 +52,6 @@ public class AddProductActivity extends BaseAppCompatActivity {
     private static final List<String> INTERVAL_TYPES = new ArrayList<>();
 
     static {
-        INTERVAL_TYPES.add(Product.INTERVAL_TYPE_SECOND);
         INTERVAL_TYPES.add(Product.INTERVAL_TYPE_MINUTE);
         INTERVAL_TYPES.add(Product.INTERVAL_TYPE_HOUR);
         INTERVAL_TYPES.add(Product.INTERVAL_TYPE_DAY);
@@ -147,6 +149,12 @@ public class AddProductActivity extends BaseAppCompatActivity {
                             product.setHitIntervalInMillis(hitInterval, hitIntervalType);
                             product.setHitActive(true);
 
+                            final long lastHitInMillis = System.currentTimeMillis();
+                            final long nextHitInMillis = System.currentTimeMillis() + product.getHitIntervalInMillis();
+
+                            product.setLastHitInMillis(lastHitInMillis);
+                            product.setNextHitInMillis(nextHitInMillis);
+
                             try {
                                 final long newProductId = pTable.add(product);
 
@@ -157,10 +165,17 @@ public class AddProductActivity extends BaseAppCompatActivity {
                                 final Intent newProductIntent = new Intent();
                                 newProductIntent.putExtra(Product.KEY, product);
                                 setResult(RESULT_OK, newProductIntent);
-                                setResult(RESULT_OK, newProductIntent);
 
                                 Toast.makeText(AddProductActivity.this, "New product added", Toast.LENGTH_SHORT).show();
 
+                                //TODO: Set next hit here
+                                //Building alarm manager
+                                final Intent alarmIntent = new Intent(AddProductActivity.this, PriceUpdaterService.class);
+                                alarmIntent.putExtra(Products.COLUMN_ID, newProductId);
+                                final PendingIntent alarmPendingIntent = PendingIntent.getService(AddProductActivity.this, 0, alarmIntent, 0);
+                                final AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                                am.cancel(alarmPendingIntent); //cancelling existing alarm
+                                am.setRepeating(AlarmManager.RTC_WAKEUP, nextHitInMillis, product.getHitIntervalInMillis(), alarmPendingIntent);
                                 finish();
 
                             } catch (CustomRuntimeException e) {
@@ -170,7 +185,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
                         } else {
 
                             //Adding price history
-                            PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(oldProductId, product.getCurrentPrice()));
+                            PriceHistories.getInstance(AddProductActivity.this).addPriceIfChanged(new PriceHistory(oldProductId, product.getCurrentPrice()));
 
                             //Product exist in db
                             getDialogUtils().showErrorDialog(R.string.Product_exists);

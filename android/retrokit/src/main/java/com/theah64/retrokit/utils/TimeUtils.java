@@ -6,9 +6,9 @@ package com.theah64.retrokit.utils;
 
 public class TimeUtils {
 
-    static int getPercentageFinished(int start, int now, int end) {
-        int totalDuration = end - start;
-        int timeSpent = now - start;
+    public static int getPercentageFinished(long start, long now, long end) {
+        long totalDuration = end - start;
+        long timeSpent = now - start;
         float percFinished = (float) timeSpent / totalDuration * 100;
         return (int) percFinished;
     }

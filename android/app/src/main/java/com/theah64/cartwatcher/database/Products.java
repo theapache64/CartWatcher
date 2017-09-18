@@ -28,6 +28,8 @@ public class Products extends BaseTable<Product> {
     public static final String COLUMN_IS_HIT_ACTIVE = "is_hit_active";
     public static final String COLUMN_AS_CURRENT_PRICE = "current_price";
     public static final String COLUMN_AS_RECENT_PRICE = "recent_price";
+    public static final String COLUMN_AS_LAST_HIT_IN_MILLIS = "last_hit_in_millis";
+    public static final String COLUMN_NEXT_HIT_IN_MILLIS = "next_hit_in_millis";
 
     @SuppressLint("StaticFieldLeak")
     private static Products instance;
@@ -64,13 +66,14 @@ public class Products extends BaseTable<Product> {
                 .add(COLUMN_HIT_INTERVAL_IN_MILLIS, product.getHitIntervalInMillis())
                 .add(COLUMN_IMAGE_URL, product.getImageUrl())
                 .add(COLUMN_IS_HIT_ACTIVE, product.isHitActive())
+                .add(COLUMN_NEXT_HIT_IN_MILLIS, product.getNextHitInMillis())
                 .done(true);
     }
 
     @Override
     public List<Product> getAll() {
         final List<Product> products = new ArrayList<>();
-        final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS recent_price, ph.created_at AS last_hit FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
+        final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS recent_price, ph.updated_at_in_millis AS last_hit_in_millis, p.next_hit_in_millis FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
         if (cursor.getCursor().moveToFirst()) {
             do {
                 products.add(Product.parse(cursor));

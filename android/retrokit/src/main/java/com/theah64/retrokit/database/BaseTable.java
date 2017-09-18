@@ -88,9 +88,9 @@ public class BaseTable<T> extends SQLiteOpenHelper {
 
         final Cursor cur;
         if (whereColumn2 == null || whereColumnValue2 == null) {
-            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, null, "1");
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, "ORDER BY " + COLUMN_ID + " DESC", "1");
         } else {
-            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, null, "1");
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, "ORDER BY " + COLUMN_ID + " DESC", "1");
         }
 
         if (cur.moveToFirst()) {
@@ -150,6 +150,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     }
 
     public final int getCount() {
+
         int count = 0;
 
         final Cursor c = this.getReadableDatabase().rawQuery("SELECT COUNT(id) FROM " + getTableName(), null);
@@ -163,5 +164,13 @@ public class BaseTable<T> extends SQLiteOpenHelper {
         }
 
         return count;
+
+    }
+
+    protected boolean updateLastRow(String whereColumn, String whereColumnValue, String updateColumn, String updateColumnValue) {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final ContentValues cv = new ContentValues(1);
+        cv.put(updateColumn, updateColumnValue);
+        return db.update(tableName, cv, whereColumn + " = ? AND " + String.format("id = (SELECT MAX(id) FROM %s WHERE %s='%s')", getTableName(), whereColumn, whereColumnValue), new String[]{whereColumnValue}) > 0;
     }
 }

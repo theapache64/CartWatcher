@@ -14,6 +14,7 @@ public class PriceHistories extends BaseTable<PriceHistory> {
 
     private static final String COLUMN_PRODUCT_ID = "product_id";
     private static final String COLUMN_PRICE = "price";
+    private static final String COLUMN_UPDATED_AT_IN_MILLIS = "updated_at_in_millis";
     private static PriceHistories instance;
 
     protected PriceHistories(Context context) {
@@ -32,6 +33,21 @@ public class PriceHistories extends BaseTable<PriceHistory> {
         return new AddBuilder(this)
                 .add(COLUMN_PRODUCT_ID, priceHistory.getProductId())
                 .add(COLUMN_PRICE, priceHistory.getPrice())
+                .add(COLUMN_UPDATED_AT_IN_MILLIS, System.currentTimeMillis())
                 .done(true);
     }
+
+    public void addPriceIfChanged(PriceHistory priceHistory) {
+        final long oldPrice = Long.parseLong(get(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_PRICE));
+        if (oldPrice != priceHistory.getPrice()) {
+            //Price updated
+            add(priceHistory);
+
+        } else {
+            //Price not updated, just update the hit time
+            updateLastRow(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_UPDATED_AT_IN_MILLIS, String.valueOf(System.currentTimeMillis()));
+        }
+    }
+
+
 }

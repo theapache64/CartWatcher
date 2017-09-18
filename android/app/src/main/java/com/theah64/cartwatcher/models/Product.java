@@ -3,6 +3,7 @@ package com.theah64.cartwatcher.models;
 import com.google.gson.annotations.SerializedName;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.retrokit.database.CustomCursor;
+import com.theah64.retrokit.utils.TimeUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +17,6 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     //Hit longerval types
-    public static final String INTERVAL_TYPE_SECOND = "SECOND";
     public static final String INTERVAL_TYPE_MINUTE = "MINUTE";
     public static final String INTERVAL_TYPE_HOUR = "HOUR";
     public static final String INTERVAL_TYPE_DAY = "DAY";
@@ -44,14 +44,14 @@ public class Product implements Serializable {
     private final String productUrl;
 
     private long hitInterval;
-    private long hitIntervalInMillis;
+    private long hitIntervalInMillis, lastHitInMillis, nextHitInMillis;
     private String hitIntervalType;
 
     private final long recentPrice;
     private boolean isHitActive;
 
 
-    Product(String id, String title, long currentPrice, long recentPrice, String source, String imageUrl, String specialId, String productUrl, long hitInterval, String hitIntervalType, boolean isHitActive) {
+    Product(String id, String title, long currentPrice, long recentPrice, String source, String imageUrl, String specialId, String productUrl, long hitInterval, String hitIntervalType, boolean isHitActive, long lastHitInMillis, long nextHitInMillis) {
         this.id = id;
         this.title = title;
         this.currentPrice = currentPrice;
@@ -63,8 +63,27 @@ public class Product implements Serializable {
         this.hitInterval = hitInterval;
         this.hitIntervalType = hitIntervalType;
         this.isHitActive = isHitActive;
+        this.lastHitInMillis = lastHitInMillis;
+        this.nextHitInMillis = nextHitInMillis;
 
         setHitIntervalInMillis(hitInterval, hitIntervalType);
+    }
+
+
+    public long getLastHitInMillis() {
+        return lastHitInMillis;
+    }
+
+    public void setLastHitInMillis(long lastHitInMillis) {
+        this.lastHitInMillis = lastHitInMillis;
+    }
+
+    public long getNextHitInMillis() {
+        return nextHitInMillis;
+    }
+
+    public void setNextHitInMillis(long nextHitInMillis) {
+        this.nextHitInMillis = nextHitInMillis;
     }
 
     public void setHitActive(boolean hitActive) {
@@ -156,10 +175,6 @@ public class Product implements Serializable {
 
         switch (intervalType) {
 
-            case INTERVAL_TYPE_SECOND:
-                hitIntervalInMillis = interval * 1000;
-                break;
-
             case INTERVAL_TYPE_MINUTE:
                 hitIntervalInMillis = (interval * 1000) * 60;
                 break;
@@ -198,7 +213,7 @@ public class Product implements Serializable {
 
     public int getNextHitProgress() {
         //Calc hit progress from current time and last hit and next hit
-        return 60;
+        return TimeUtils.getPercentageFinished(lastHitInMillis, System.currentTimeMillis(), nextHitInMillis);
     }
 
     public boolean isHitActive() {
@@ -217,7 +232,8 @@ public class Product implements Serializable {
                 cursor.getStringByColumnIndex(Products.COLUMN_PRODUCT_URL),
                 cursor.getLongByColumnIndex(Products.COLUMN_HIT_INTERVAL),
                 cursor.getStringByColumnIndex(Products.COLUMN_HIT_INTERVAL_TYPE),
-                cursor.getBooleanByColumnIndex(Products.COLUMN_IS_HIT_ACTIVE)
-        );
+                cursor.getBooleanByColumnIndex(Products.COLUMN_IS_HIT_ACTIVE),
+                cursor.getLongByColumnIndex(Products.COLUMN_AS_LAST_HIT_IN_MILLIS),
+                cursor.getLongByColumnIndex(Products.COLUMN_NEXT_HIT_IN_MILLIS));
     }
 }
