@@ -62,11 +62,12 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         }
 
         //Starting count down timer
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("A kiss every second");
-                holder.pbNextHit.setProgress(product.getHitProgress());
+                holder.pbNextHit.setProgress(product.getNextHitProgress());
             }
         }, 0, 1000);
 
@@ -78,6 +79,8 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
     protected int getRowLayoutID() {
         return R.layout.products_row;
     }
+
+
 
     @Override
     protected ViewHolder getNewRow(View row) {
@@ -112,7 +115,7 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         }
 
         @OnClick(R.id.ibHitControl)
-        public void onHitControlClicked() {
+        void onHitControlClicked() {
             callback.onHitControllerClicked(getLayoutPosition());
         }
     }

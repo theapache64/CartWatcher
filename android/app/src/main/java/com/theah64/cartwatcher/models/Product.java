@@ -196,7 +196,7 @@ public class Product implements Serializable {
         return recentPrice != 0 ? currentPrice - recentPrice : 0;
     }
 
-    public int getHitProgress() {
+    public int getNextHitProgress() {
         //Calc hit progress from current time and last hit and next hit
         return 60;
     }
