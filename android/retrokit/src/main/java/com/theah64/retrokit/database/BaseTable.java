@@ -88,9 +88,9 @@ public class BaseTable<T> extends SQLiteOpenHelper {
 
         final Cursor cur;
         if (whereColumn2 == null || whereColumnValue2 == null) {
-            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, "ORDER BY " + COLUMN_ID + " DESC", "1");
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? ", new String[]{whereColumnValue1}, null, null, COLUMN_ID + " DESC", "1");
         } else {
-            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, "ORDER BY " + COLUMN_ID + " DESC", "1");
+            cur = this.getWritableDatabase().query(getTableName(), new String[]{columnToReturn}, whereColumn1 + " = ? AND " + whereColumn2 + " = ? ", new String[]{whereColumnValue1, whereColumnValue2}, null, null, COLUMN_ID + " DESC", "1");
         }
 
         if (cur.moveToFirst()) {
