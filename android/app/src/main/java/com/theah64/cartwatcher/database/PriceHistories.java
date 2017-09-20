@@ -40,10 +40,16 @@ public class PriceHistories extends BaseTable<PriceHistory> {
     public void addPriceIfChanged(PriceHistory priceHistory) {
         final long oldPrice = Long.parseLong(get(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_PRICE));
         if (oldPrice != priceHistory.getPrice()) {
+
+            System.out.println("New price found : " + priceHistory);
+
             //Price updated
             add(priceHistory);
 
         } else {
+
+            System.out.println("Found old price: " + priceHistory);
+
             //Price not updated, just update the hit time
             updateLastRow(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_UPDATED_AT_IN_MILLIS, String.valueOf(System.currentTimeMillis()));
         }

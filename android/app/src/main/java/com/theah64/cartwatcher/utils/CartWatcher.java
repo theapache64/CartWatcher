@@ -14,6 +14,18 @@ import com.theah64.retrokit.retro.RetroKit;
 
 public class CartWatcher extends Application {
 
+    private static PriceUpdaterCallback callback;
+
+
+    public static PriceUpdaterCallback getCallback() {
+        return callback;
+    }
+
+    public static void setCallback(PriceUpdaterCallback callback) {
+        System.out.println(callback == null ? "Product updater callback UNSUBSCRIBED" : "Product updater callback SUBSCRIBED");
+        CartWatcher.callback = callback;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

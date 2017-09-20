@@ -1,17 +1,19 @@
 package com.theah64.cartwatcher.lab;
 
 
-import java.io.IOException;
+import java.util.HashSet;
 
 public class MyClass {
 
-    public static void main(String[] args) throws IOException {
+    private static final String[] ORIGINAL_CODES = {
+            "MALFKJZPQEQJJJ2",
+            "MAL9DXXXXZQEFAZ",
+            "MAL4KEAAANVXVUP"
+    };
 
-        int start = 800;
-        int now = 1400;
-        int end = 1200;
+    public static void main(String[] args) {
+        final HashSet<String> hashSet = new HashSet<>();
 
-        System.out.println(TimeUtils.getPercentageFinished(start, now, end));
     }
 
 }

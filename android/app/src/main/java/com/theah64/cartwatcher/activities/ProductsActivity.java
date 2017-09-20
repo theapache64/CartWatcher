@@ -11,6 +11,8 @@ import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.adapters.ProductsAdapter;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.Product;
+import com.theah64.cartwatcher.utils.CartWatcher;
+import com.theah64.cartwatcher.utils.PriceUpdaterCallback;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
 import com.theah64.retrokit.utils.ProgressManager;
 import com.theah64.retrokit.widgets.CustomRecyclerView;
@@ -19,7 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ProductsActivity extends BaseAppCompatActivity implements ProductsAdapter.ProductsAdapterCallback {
+public class ProductsActivity extends BaseAppCompatActivity implements ProductsAdapter.ProductsAdapterCallback, PriceUpdaterCallback {
 
     @BindView(R.id.crvProducts)
     CustomRecyclerView crvProducts;
@@ -88,5 +90,23 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CartWatcher.setCallback(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CartWatcher.setCallback(null);
+    }
+
+
+    @Override
+    public void onProductUpdated(String productId) {
+        System.out.println("Product updated in UI");
     }
 }

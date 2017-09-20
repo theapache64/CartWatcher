@@ -33,7 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".PriceUpdaterService"
+            android:name=".services.PriceUpdaterService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
