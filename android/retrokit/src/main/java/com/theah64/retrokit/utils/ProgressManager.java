@@ -24,6 +24,7 @@ public class ProgressManager {
     public static final int ERROR_TYPE_NETWORK_ERROR = 844;
     public static final int ERROR_TYPE_SERVER_ERROR = 532;
     public static final int ERROR_TYPE_UNKNOWN_ERROR = 202;
+    public static final int ERROR_TYPE_EMPTY = 654;
 
     private final View progressLayout, mainView;
     private final ImageView ivErrorIcon;
@@ -99,6 +100,8 @@ public class ProgressManager {
                 return R.drawable.ic_unknown_error; //TODO: Need to find new icon
             case ERROR_TYPE_SERVER_ERROR:
                 return R.drawable.ic_unknown_error;//TODO: Need to find new icon
+            case ERROR_TYPE_EMPTY:
+                return R.drawable.empty_box;// TODO: This should be modified later.
             case ERROR_TYPE_UNKNOWN_ERROR:
                 return R.drawable.ic_unknown_error;
             default:

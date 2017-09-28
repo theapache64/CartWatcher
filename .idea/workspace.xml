@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddd11ea9-8832-4ecc-9c7e-738ddbffc3fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/.idea/workspace.xml" afterPath="$PROJECT_DIR$/server/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/com/theah64/cartwatcher/server/servlets/GetProductServlet.java" afterPath="$PROJECT_DIR$/server/src/com/theah64/cartwatcher/server/servlets/GetProductServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/retrokit/src/main/res/drawable/empty_box.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/.idea/misc.xml" afterPath="$PROJECT_DIR$/android/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/build.gradle" afterPath="$PROJECT_DIR$/android/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/src/main/java/com/theah64/cartwatcher/utils/CartWatcher.java" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/theah64/cartwatcher/utils/CartWatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/content_products.xml" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/content_products.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/products_row.xml" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/products_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/retrokit/build.gradle" afterPath="$PROJECT_DIR$/android/retrokit/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/retro/RetroKit.java" afterPath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/retro/RetroKit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/utils/ProgressManager.java" afterPath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/utils/ProgressManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/widgets/CustomRecyclerView.java" afterPath="$PROJECT_DIR$/android/retrokit/src/main/java/com/theah64/retrokit/widgets/CustomRecyclerView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/retrokit/src/main/res/layout/progress_layout.xml" afterPath="$PROJECT_DIR$/android/retrokit/src/main/res/layout/progress_layout.xml" />
     </list>
     <ignored path="CartWatcher.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,9 +73,9 @@
         <subPane />
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">

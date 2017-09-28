@@ -66,7 +66,6 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("A kiss every second");
                 holder.pbNextHit.setProgress(product.getNextHitProgress());
             }
         }, 0, 1000);
@@ -79,7 +78,6 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
     protected int getRowLayoutID() {
         return R.layout.products_row;
     }
-
 
 
     @Override

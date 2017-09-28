@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.cartwatcher.BuildConfig;
-import com.theah64.cartwatcher.services.PriceUpdaterService;
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.PriceHistory;
 import com.theah64.cartwatcher.models.Product;
 import com.theah64.cartwatcher.responses.GetProductResponse;
+import com.theah64.cartwatcher.services.PriceUpdaterService;
 import com.theah64.cartwatcher.utils.APIInterface;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
 import com.theah64.retrokit.exceptions.CustomRuntimeException;
@@ -83,7 +83,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
         spIntervalTypes.setAdapter(intervalTypesAdapter);
 
         //Setting default values
-        vtilHitInterval.setText("10");
+        vtilHitInterval.setText("1");
         spIntervalTypes.setSelection(INTERVAL_TYPES.indexOf(Product.INTERVAL_TYPE_MINUTE));
 
         inputValidator = new ValidTextInputLayout.InputValidator(vtilProductURL, vtilHitInterval);
@@ -156,10 +156,10 @@ public class AddProductActivity extends BaseAppCompatActivity {
                             product.setNextHitInMillis(nextHitInMillis);
 
                             try {
-                                final long newProductId = pTable.add(product);
+                                final String newProductId = String.valueOf(pTable.add(product));
 
                                 //Adding first price history
-                                PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(String.valueOf(newProductId), product.getCurrentPrice()));
+                                PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(newProductId, product.getCurrentPrice()));
 
                                 //Setting result, so that can the products activity can load this item into recyclerview
                                 final Intent newProductIntent = new Intent();

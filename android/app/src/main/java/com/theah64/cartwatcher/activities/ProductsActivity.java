@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.theah64.cartwatcher.R;
@@ -28,6 +29,7 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
 
     private List<Product> products;
     private ProductsAdapter productsAdapter;
+    private Products productsTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
         });
 
         //Getting all products from database
-        products = Products.getInstance(this).getAll();
+        productsTable = Products.getInstance(this);
+        products = productsTable.getAll();
         productsAdapter = new ProductsAdapter(this, products, this);
 
         crvProducts.setLayoutManager(new LinearLayoutManager(this));
@@ -55,6 +58,7 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
                 launchAddProductActivity();
             }
         }, getString(R.string.ADD));
+
 
     }
 
@@ -107,6 +111,62 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
 
     @Override
     public void onProductUpdated(String productId) {
-        System.out.println("Product updated in UI");
+        System.out.println("Product updated in UI: " + productId);
+        final Product product = productsTable.get(Products.COLUMN_ID, productId);
+
+        System.out.println("Product is :" + productId);
+
+        //Replacing list item
+        final int replacePosition = new ListItemReplacer<Product>(products) {
+            @Override
+            String getReplaceProperty(Product product) {
+                return product.getId();
+            }
+        }.replace(productId).with(product);
+
+
+        if (replacePosition != -1) {
+            System.out.println("Product position updated");
+            productsAdapter.notifyItemChanged(replacePosition);
+        }
+
+    }
+
+    abstract class ListItemReplacer<T> {
+        private final List<T> list;
+        private String findProperty;
+
+        public ListItemReplacer(List<T> list) {
+            this.list = list;
+        }
+
+        abstract String getReplaceProperty(T t);
+
+        public ListItemReplacer<T> replace(String findProperty) {
+            this.findProperty = findProperty;
+            return this;
+        }
+
+        public int with(T t) {
+            //First getting the index
+            int pos = -1;
+            for (int i = 0; i < list.size(); i++) {
+                final T t1 = list.get(i);
+                if (getReplaceProperty(t1).equals(findProperty)) {
+                    pos = i;
+                    break;
+                }
+            }
+
+            if (pos != -1) {
+                list.remove(pos);
+                list.add(pos, t);
+                Log.i(X, "Match found");
+            } else {
+                Log.e(X, "No match found");
+            }
+
+            return pos;
+        }
     }
 }

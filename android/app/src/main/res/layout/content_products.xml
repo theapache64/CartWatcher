@@ -8,8 +8,6 @@
     tools:context="com.theah64.cartwatcher.activities.ProductsActivity"
     tools:showIn="@layout/activity_products">
 
-
-
     <com.theah64.retrokit.widgets.CustomRecyclerView
         android:id="@+id/crvProducts"
         android:layout_width="match_parent"

@@ -42,7 +42,7 @@ public class CustomRecyclerView extends RecyclerView {
     private void updateErrorMessage() {
         if (getAdapter().getItemCount() == 0) {
             //empty list. hide the recyclerview and show the custom error
-            pm.showError(ProgressManager.ERROR_TYPE_UNKNOWN_ERROR, errorIfEmptyList);
+            pm.showError(ProgressManager.ERROR_TYPE_EMPTY, errorIfEmptyList);
         } else {
             pm.showMainView();
         }

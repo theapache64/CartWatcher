@@ -36,7 +36,7 @@ public class CartWatcher extends Application {
                 .enableVersionCheck()
                 .enableNetworkLog()
                 .enableImageLoader()
-                .setIconModule(new FontAwesomeModule())
+                .addIconModule(new FontAwesomeModule())
                 .setDefaultFontPathAsRobotoRegular();
 
         try {

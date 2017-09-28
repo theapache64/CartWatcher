@@ -82,7 +82,7 @@ public class RetroKit {
         return this;
     }
 
-    public RetroKit setIconModule(IconFontDescriptor descriptor) {
+    public RetroKit addIconModule(IconFontDescriptor descriptor) {
         Iconify.with(descriptor);
         return this;
     }

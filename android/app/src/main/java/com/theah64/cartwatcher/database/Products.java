@@ -71,6 +71,19 @@ public class Products extends BaseTable<Product> {
     }
 
     @Override
+    public Product get(String column, String value) {
+        final String query = String.format("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS recent_price, ph.updated_at_in_millis AS last_hit_in_millis, p.next_hit_in_millis FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id WHERE p.%s = ? GROUP BY p.id LIMIT 1;", column);
+        final CustomCursor customCursor = new CustomCursor(this.getReadableDatabase().rawQuery(query, new String[]{value}));
+        Product product = null;
+        if (customCursor.getCursor().moveToFirst()) {
+            product = Product.parse(customCursor);
+        }
+        customCursor.getCursor().close();
+
+        return product;
+    }
+
+    @Override
     public List<Product> getAll() {
         final List<Product> products = new ArrayList<>();
         final CustomCursor cursor = new CustomCursor(this.getReadableDatabase().rawQuery("SELECT p.id, p.special_id, p.title, p.source, p.product_url, p.image_url, p.hit_interval, p.hit_interval_type, p.hit_interval_in_millis, p.is_hit_active, ph.price AS current_price, (SELECT price FROM price_histories WHERE product_id = ph.product_id ORDER BY id DESC LIMIT 1,2) AS recent_price, ph.updated_at_in_millis AS last_hit_in_millis, p.next_hit_in_millis FROM products p INNER JOIN price_histories ph ON ph.product_id = p.id GROUP BY p.id;", null));
