@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.PriceHistory;
+import com.theah64.cartwatcher.models.Product;
 import com.theah64.cartwatcher.responses.GetProductResponse;
 import com.theah64.cartwatcher.utils.APIInterface;
 import com.theah64.cartwatcher.utils.CartWatcher;
@@ -30,11 +31,19 @@ public class PriceUpdaterService extends IntentService {
 
             //Product
             final String productId = (String) intent.getSerializableExtra(Products.COLUMN_ID);
-            final String productUrl = Products.getInstance(this).get(Products.COLUMN_ID, productId, Products.COLUMN_PRODUCT_URL);
+            final Products productsTable = Products.getInstance(this);
+            final Product product = productsTable.get(Products.COLUMN_ID, productId);
 
-            RetrofitClient.getClient().create(APIInterface.class).getProduct(productUrl).enqueue(new CustomRetrofitCallback<BaseAPIResponse<GetProductResponse>, GetProductResponse>() {
+            RetrofitClient.getClient().create(APIInterface.class).getProduct(product.getProductUrl()).enqueue(new CustomRetrofitCallback<BaseAPIResponse<GetProductResponse>, GetProductResponse>() {
                 @Override
                 protected void onSuccess(GetProductResponse data) {
+
+                    //Updating product next hit time
+                    final long nextHitInMillis = System.currentTimeMillis() + product.getHitIntervalInMillis();
+                    product.setNextHitInMillis(nextHitInMillis);
+
+                    //Updating product hit time
+                    productsTable.update(product);
 
                     //Adding value to db
                     PriceHistories.getInstance(PriceUpdaterService.this).addPriceIfChanged(new PriceHistory(productId, data.getProduct().getCurrentPrice()));

@@ -168,7 +168,6 @@ public class AddProductActivity extends BaseAppCompatActivity {
 
                                 Toast.makeText(AddProductActivity.this, "New product added", Toast.LENGTH_SHORT).show();
 
-                                //TODO: Set next hit here
                                 //Building alarm manager
                                 final Intent alarmIntent = new Intent(AddProductActivity.this, PriceUpdaterService.class);
                                 alarmIntent.putExtra(Products.COLUMN_ID, newProductId);

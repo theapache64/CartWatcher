@@ -7,6 +7,7 @@ import com.theah64.cartwatcher.models.Product;
 import com.theah64.retrokit.database.AddBuilder;
 import com.theah64.retrokit.database.BaseTable;
 import com.theah64.retrokit.database.CustomCursor;
+import com.theah64.retrokit.database.UpdateBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,5 +98,11 @@ public class Products extends BaseTable<Product> {
         return products;
     }
 
-
+    @Override
+    public boolean update(Product product) {
+        return new UpdateBuilder(this)
+                .where(Products.COLUMN_ID + "= ? ", product.getId())
+                .add(Products.COLUMN_NEXT_HIT_IN_MILLIS, product.getNextHitInMillis())
+                .done(true) != -1;
+    }
 }

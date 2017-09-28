@@ -62,8 +62,9 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         }
 
         //Starting count down timer
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        holder.getTimer().cancel();
+        holder.setTimer(new Timer());
+        holder.getTimer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 holder.pbNextHit.setProgress(product.getNextHitProgress());
@@ -108,6 +109,9 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         @BindView(R.id.itvPriceFluctuationIndicator)
         IconTextView itvPriceFluctuationIndicator;
 
+
+        Timer timer = new Timer();
+
         ViewHolder(View row, BaseRecyclerViewAdapter adapter) {
             super(row, adapter);
         }
@@ -115,6 +119,14 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
         @OnClick(R.id.ibHitControl)
         void onHitControlClicked() {
             callback.onHitControllerClicked(getLayoutPosition());
+        }
+
+        public Timer getTimer() {
+            return timer;
+        }
+
+        public void setTimer(Timer timer) {
+            this.timer = timer;
         }
     }
 

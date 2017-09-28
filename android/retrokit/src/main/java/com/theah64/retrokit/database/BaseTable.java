@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -120,7 +119,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     }
 
 
-    public boolean update(T t, @Nullable Handler handler) {
+    public boolean update(T t) {
         throw new IllegalArgumentException(FATAL_ERROR_UNDEFINED_METHOD);
     }
 

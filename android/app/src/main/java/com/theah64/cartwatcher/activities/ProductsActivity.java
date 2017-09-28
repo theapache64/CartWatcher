@@ -7,11 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.adapters.ProductsAdapter;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.Product;
+import com.theah64.cartwatcher.services.PriceUpdaterService;
 import com.theah64.cartwatcher.utils.CartWatcher;
 import com.theah64.cartwatcher.utils.PriceUpdaterCallback;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
@@ -71,7 +73,11 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
 
     @Override
     public void onItemClick(Product product, int position) {
+        final Intent hitIntent = new Intent(this, PriceUpdaterService.class);
+        hitIntent.putExtra(Products.COLUMN_ID, product.getId());
+        startService(hitIntent);
 
+        Toast.makeText(this, "hit!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,43 +1,27 @@
 package com.theah64.retrokit.database;
 
-import android.content.ContentValues;
-
 import com.theah64.retrokit.exceptions.CustomRuntimeException;
 
 /**
  * Created by theapache64 on 16/9/17.
  */
 
-public class AddBuilder {
-
-    private final BaseTable baseTable;
-    private final ContentValues cv = new ContentValues();
+public class AddBuilder extends BaseAddUpdateBuilder {
 
     public AddBuilder(BaseTable baseTable) {
-        this.baseTable = baseTable;
+        super(baseTable);
     }
 
-
-    public AddBuilder add(String column, String value) {
-        cv.put(column, value);
-        return this;
-    }
-
-    public AddBuilder add(String column, long value) {
-        cv.put(column, value);
-        return this;
-    }
-
+    @Override
     public long done(boolean isThrowIfFailed) {
-        final long insertId = baseTable.getWritableDatabase().insert(baseTable.getTableName(), null, cv);
+
+        final long insertId = getBaseTable().getWritableDatabase().insert(getBaseTable().getTableName(), null, getCv());
         if (isThrowIfFailed && insertId == -1) {
             throw new CustomRuntimeException("Failed to insert new row");
         }
+
         return insertId;
     }
 
-    public AddBuilder add(String column, boolean value) {
-        cv.put(column, value);
-        return this;
-    }
+
 }
