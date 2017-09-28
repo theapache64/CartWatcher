@@ -28,7 +28,7 @@ public class Product implements Serializable {
     static final String SOURCE_FLIPKART = "flipkart";
     public static final String KEY = "product";
 
-    private final String id;
+    private String id;
 
     @SerializedName("title")
     private final String title;
@@ -235,5 +235,9 @@ public class Product implements Serializable {
                 cursor.getBooleanByColumnIndex(Products.COLUMN_IS_HIT_ACTIVE),
                 cursor.getLongByColumnIndex(Products.COLUMN_AS_LAST_HIT_IN_MILLIS),
                 cursor.getLongByColumnIndex(Products.COLUMN_NEXT_HIT_IN_MILLIS));
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

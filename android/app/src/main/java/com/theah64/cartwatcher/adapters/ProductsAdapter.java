@@ -69,7 +69,7 @@ public class ProductsAdapter extends BaseRecyclerViewAdapter<ProductsAdapter.Vie
             public void run() {
                 holder.pbNextHit.setProgress(product.getNextHitProgress());
             }
-        }, 0, 1000);
+        }, 0, 100);
 
         holder.ibHitControl.setText(product.isHitActive() ? R.string.fa_stop_circle_o_iconify : R.string.fa_play_circle_o_iconify);
     }

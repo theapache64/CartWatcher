@@ -15,6 +15,7 @@ public interface APIInterface {
     @GET("get_latest_version_details")
     Call<BaseAPIResponse<VersionCheckerResponse>> getVersionCheckResponse();
 
+
 }
 
 

@@ -49,7 +49,7 @@ public class PriceUpdaterService extends IntentService {
                     PriceHistories.getInstance(PriceUpdaterService.this).addPriceIfChanged(new PriceHistory(productId, data.getProduct().getCurrentPrice()));
 
                     if (CartWatcher.getCallback() != null) {
-                        CartWatcher.getCallback().onProductUpdated(productId);
+                        CartWatcher.getCallback().onProductUpdated(product.getId());
                     }
                 }
 

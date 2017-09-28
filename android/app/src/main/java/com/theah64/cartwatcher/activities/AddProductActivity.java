@@ -157,6 +157,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
 
                             try {
                                 final String newProductId = String.valueOf(pTable.add(product));
+                                product.setId(newProductId);
 
                                 //Adding first price history
                                 PriceHistories.getInstance(AddProductActivity.this).add(new PriceHistory(newProductId, product.getCurrentPrice()));
@@ -174,6 +175,7 @@ public class AddProductActivity extends BaseAppCompatActivity {
                                 final PendingIntent alarmPendingIntent = PendingIntent.getService(AddProductActivity.this, 0, alarmIntent, 0);
                                 final AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                                 am.cancel(alarmPendingIntent); //cancelling existing alarm
+                                System.out.println("Hit Interval is " + product.getHitIntervalInMillis());
                                 am.setRepeating(AlarmManager.RTC_WAKEUP, nextHitInMillis, product.getHitIntervalInMillis(), alarmPendingIntent);
                                 finish();
 

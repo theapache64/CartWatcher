@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +16,7 @@ import com.theah64.cartwatcher.services.PriceUpdaterService;
 import com.theah64.cartwatcher.utils.CartWatcher;
 import com.theah64.cartwatcher.utils.PriceUpdaterCallback;
 import com.theah64.retrokit.activities.BaseAppCompatActivity;
+import com.theah64.retrokit.utils.ListItemReplacer;
 import com.theah64.retrokit.utils.ProgressManager;
 import com.theah64.retrokit.widgets.CustomRecyclerView;
 
@@ -125,7 +125,8 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
         //Replacing list item
         final int replacePosition = new ListItemReplacer<Product>(products) {
             @Override
-            String getReplaceProperty(Product product) {
+            public String getReplaceProperty(Product product) {
+                System.out.println("Replace property is " + product);
                 return product.getId();
             }
         }.replace(productId).with(product);
@@ -138,41 +139,5 @@ public class ProductsActivity extends BaseAppCompatActivity implements ProductsA
 
     }
 
-    abstract class ListItemReplacer<T> {
-        private final List<T> list;
-        private String findProperty;
 
-        public ListItemReplacer(List<T> list) {
-            this.list = list;
-        }
-
-        abstract String getReplaceProperty(T t);
-
-        public ListItemReplacer<T> replace(String findProperty) {
-            this.findProperty = findProperty;
-            return this;
-        }
-
-        public int with(T t) {
-            //First getting the index
-            int pos = -1;
-            for (int i = 0; i < list.size(); i++) {
-                final T t1 = list.get(i);
-                if (getReplaceProperty(t1).equals(findProperty)) {
-                    pos = i;
-                    break;
-                }
-            }
-
-            if (pos != -1) {
-                list.remove(pos);
-                list.add(pos, t);
-                Log.i(X, "Match found");
-            } else {
-                Log.e(X, "No match found");
-            }
-
-            return pos;
-        }
-    }
 }
