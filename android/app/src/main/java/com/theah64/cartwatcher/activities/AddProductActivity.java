@@ -183,7 +183,10 @@ public class AddProductActivity extends BaseAppCompatActivity {
                                 e.printStackTrace();
                                 getDialogUtils().showErrorDialog(e.getMessage());
                             }
+
                         } else {
+
+                            //We've already the product added, so add the price variation
 
                             //Adding price history
                             PriceHistories.getInstance(AddProductActivity.this).addPriceIfChanged(new PriceHistory(oldProductId, product.getCurrentPrice()));

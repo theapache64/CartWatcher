@@ -1,9 +1,11 @@
 package com.theah64.cartwatcher.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.PriceHistory;
@@ -29,9 +31,11 @@ public class PriceUpdaterService extends IntentService {
 
         if (intent != null) {
 
+            final Context context = PriceUpdaterService.this;
+
             //Product
             final String productId = (String) intent.getSerializableExtra(Products.COLUMN_ID);
-            final Products productsTable = Products.getInstance(this);
+            final Products productsTable = Products.getInstance(context);
             final Product product = productsTable.get(Products.COLUMN_ID, productId);
 
             RetrofitClient.getClient().create(APIInterface.class).getProduct(product.getProductUrl()).enqueue(new CustomRetrofitCallback<BaseAPIResponse<GetProductResponse>, GetProductResponse>() {
@@ -46,10 +50,17 @@ public class PriceUpdaterService extends IntentService {
                     productsTable.update(product);
 
                     //Adding value to db
-                    PriceHistories.getInstance(PriceUpdaterService.this).addPriceIfChanged(new PriceHistory(productId, data.getProduct().getCurrentPrice()));
+                    final int priceChange = PriceHistories.getInstance(PriceUpdaterService.this).addPriceIfChanged(new PriceHistory(productId, data.getProduct().getCurrentPrice()));
 
                     if (CartWatcher.getCallback() != null) {
                         CartWatcher.getCallback().onProductUpdated(product.getId());
+                    }
+
+                    if (priceChange == PriceHistories.PRICE_INCREASED) {
+                        //Price increased, so showing price hike notification
+                        showNotification(R.string.Price_increased, getString(R.string.s_price_increased_to_l, product.getTitle(), data.getProduct().getCurrentPrice()));
+                    } else if (priceChange == PriceHistories.PRICE_DECREASED) {
+                        //Price decreased
                     }
                 }
 

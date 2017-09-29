@@ -17,7 +17,7 @@ public class PriceHistories extends BaseTable<PriceHistory> {
     private static final String COLUMN_UPDATED_AT_IN_MILLIS = "updated_at_in_millis";
     private static PriceHistories instance;
 
-    protected PriceHistories(Context context) {
+    private PriceHistories(Context context) {
         super(context, "price_histories");
     }
 
@@ -37,7 +37,18 @@ public class PriceHistories extends BaseTable<PriceHistory> {
                 .done(true);
     }
 
-    public void addPriceIfChanged(PriceHistory priceHistory) {
+    public static final int PRICE_DECREASED = 824;
+    public static final int PRICE_INCREASED = 862;
+    private static final int PRICE_UNCHANGED = 740;
+
+    /**
+     * This method will update the price history and return the price change constant
+     *
+     * @param priceHistory
+     * @return PRICE_DECREASED , PRICE_INCREASED , PRICE_UNCHANGED
+     */
+    public int addPriceIfChanged(PriceHistory priceHistory) {
+
         final long oldPrice = Long.parseLong(get(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_PRICE));
         if (oldPrice != priceHistory.getPrice()) {
 
@@ -46,12 +57,16 @@ public class PriceHistories extends BaseTable<PriceHistory> {
             //Price updated
             add(priceHistory);
 
+            return priceHistory.getPrice() > oldPrice ? PRICE_INCREASED : PRICE_DECREASED;
+
         } else {
 
             System.out.println("Found old price: " + priceHistory);
 
             //Price not updated, just update the hit time
             updateLastRow(PriceHistories.COLUMN_PRODUCT_ID, priceHistory.getProductId(), PriceHistories.COLUMN_UPDATED_AT_IN_MILLIS, String.valueOf(System.currentTimeMillis()));
+
+            return PRICE_UNCHANGED;
         }
     }
 

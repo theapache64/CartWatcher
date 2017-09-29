@@ -13,4 +13,5 @@
     <string name="Adding_product">Adding product...</string>
     <string name="No_product_added">No product added</string>
     <string name="ADD">ADD</string>
+    <string name="Price_increased">Price increased!</string>
 </resources>
