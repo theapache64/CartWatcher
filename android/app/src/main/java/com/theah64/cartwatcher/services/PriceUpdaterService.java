@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.theah64.cartwatcher.R;
 import com.theah64.cartwatcher.database.PriceHistories;
 import com.theah64.cartwatcher.database.Products;
 import com.theah64.cartwatcher.models.PriceHistory;
@@ -58,7 +57,7 @@ public class PriceUpdaterService extends IntentService {
 
                     if (priceChange == PriceHistories.PRICE_INCREASED) {
                         //Price increased, so showing price hike notification
-                        showNotification(R.string.Price_increased, getString(R.string.s_price_increased_to_l, product.getTitle(), data.getProduct().getCurrentPrice()));
+                        //TODO: showNotification(R.string.Price_increased, getString(R.string.s_price_increased_to_l, product.getTitle(), data.getProduct().getCurrentPrice()));
                     } else if (priceChange == PriceHistories.PRICE_DECREASED) {
                         //Price decreased
                     }
