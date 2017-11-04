@@ -1,5 +1,4 @@
-# CartWatcher 
-##### (under-development)
+# CartWatcher (under-development)
 A simple android application to watch price variation of your flipkart/amazon products.
 
 **CartWatcher server**
